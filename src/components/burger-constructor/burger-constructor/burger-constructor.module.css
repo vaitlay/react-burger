@@ -1,0 +1,18 @@
+.betweenBunsSpace 
+{
+    overflow-y: scroll;
+}
+
+.container {
+    width: 600px;
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    
+  }
+
+.submitContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
