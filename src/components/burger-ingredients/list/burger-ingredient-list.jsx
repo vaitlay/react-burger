@@ -15,7 +15,7 @@ class IngredientList extends React.Component{
         {this.props.items.map(item => {
           return (
             <div className = 'item' key = {item._id}>
-              <IngredientCard item = {item}/>
+              <IngredientCard item = {item} count = {0}/>
             </div>
           )
         })}

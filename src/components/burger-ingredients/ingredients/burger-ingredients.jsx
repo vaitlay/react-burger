@@ -4,7 +4,6 @@ import burgerStyles from './burger-ingredients.module.css';
 import {ingredientsData} from '../../../utils/data.js';
 import IngredientList from '../list/burger-ingredient-list.jsx';
 
-
 const buns = ingredientsData.filter(component => component.type === 'bun');
 const sauces = ingredientsData.filter(component => component.type === 'sauce');
 const mains = ingredientsData.filter(component => component.type === 'main');
