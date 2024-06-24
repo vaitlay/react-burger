@@ -1,0 +1,24 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: black;
+    border-radius: 5%;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
