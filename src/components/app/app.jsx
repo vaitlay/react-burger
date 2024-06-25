@@ -15,11 +15,59 @@ function App() {
   const IngredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
 
   const loadIngredientsData = async () => {
+    return fetch(IngredientsUrl)
+      .then(res => {
+        if (!res.ok) {
+          return Promise.reject(`Ошибка соединения с сервером: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then(res => {
+        if (res.data.length === 0) {
+          return Promise.reject('Нет данных от сервера')
+        }
+        return Promise.resolve(res.data);
+      })
+  };
+
+
+  React.useEffect(() => {
+    loadIngredientsData()
+      .then(data => {
+        console.log(data);
+        setLoadingState({ data: data, isLoading: false, isError: false });
+      })
+      .catch(err => {
+        setLoadingState({ data: null, isLoading: false, hasError: true, errorMessage: err });
+      });
+  }, []);
+  
+
+  if (loadingState.isLoading) return <p>Идёт загрузка данных с сервера</p>
+  else if (loadingState.hasError) return <p>{`${loadingState.errorMessage}`}</p>
+  else {
+    return (
+    <>
+      <AppHeader />
+      <main className = {mainStyle.container}>  
+        <BurgerIngredients ingredients = {loadingState.data}/>
+        <BurgerConstructor ingredients = {loadingState.data}/>
+      </main>
+    </> 
+    ) 
+  }
+}
+
+export default App
+
+
+/*
+ const loadIngredientsData = async () => {
     setLoadingState({...loadingState, isLoading: true});
     try {
       const res = await fetch(IngredientsUrl);
       if (res.status >= 400) throw Error(`Ошибка соединения с сервером: ${res.statusText}`);
-      const data = await res.json();
+      if (res.ok) const data = await res.json();
       if (data.length === 0 ) throw Error('Нет данных от сервера');
       setLoadingState({...loadingState, isLoading: false, data: data.data})
     }
@@ -28,26 +76,4 @@ function App() {
       console.log(`Ошибка - ${err}`);
     } 
   }
-  
-
-  React.useEffect(() => {
-    loadIngredientsData();
-  }, []);
-
-  if (loadingState.isLoading) return <p>Идёт загрузка данных с сервера</p>
-  else if (loadingState.hasError) return <p >{`${loadingState.errorMessage}`}</p>
-  else {
-    return (
-    <>
-      <AppHeader />
-      <main className = {mainStyle.container}>  
-        <BurgerIngredients ingredients = {loadingState.data}/>
-        <BurgerConstructor ingredients = {loadingState.data}/>
-        <div id="modals"></div>
-      </main>
-    </> 
-    ) 
-  }
-}
-
-export default App
+*/

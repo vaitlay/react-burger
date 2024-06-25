@@ -1,22 +1,21 @@
 import ReactDOM from 'react-dom';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import PropTypes from 'prop-types'
 import modalStyles from './modal.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay.jsx'
 
 const Modal = ({ header, children, onClose }) => {
-  const EscapeKeyPress = useCallback((e) => {
+  const handleEscape = (e) => {
     if (e.key === 'Escape') onClose();
-    console.log(e);
-  },[onClose]);
+  };
 
   useEffect(() => {
-    document.addEventListener('keydown', EscapeKeyPress);
+    document.addEventListener('keydown', handleEscape);
     return (() => {
-      document.removeEventListener('keydown', EscapeKeyPress)
+      document.removeEventListener('keydown', handleEscape)
     });
-  },[EscapeKeyPress]);
+  },[handleEscape]);
 
 
 
@@ -40,7 +39,8 @@ const Modal = ({ header, children, onClose }) => {
 
 Modal.propTypes = {
     header: PropTypes.string,
-    children: PropTypes.arrayOf(PropTypes.element),
+    children: PropTypes.element,
+    //children: PropTypes.arrayOf(PropTypes.element),
     onClose: PropTypes.func.isRequired
 }
 

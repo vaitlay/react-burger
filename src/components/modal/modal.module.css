@@ -8,6 +8,7 @@
     transform: translate(-50%, -50%);
     background-color: black;
     border-radius: 5%;
+    width: 720px;
 }
 
 .header {

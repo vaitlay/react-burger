@@ -1,12 +1,10 @@
-import PropTypes from 'prop-types';
 import ingredientDetailsStyles from './ingredient-details.module.css';
-import Modal from '../modal/modal.jsx';
 import { ingredientType } from '../../utils/types.js';
 
-const IngredientDetails = ({ item, onClose }) => {
+const IngredientDetails = ({ item }) => {
   return (
-    <Modal header = 'Детали ингридиента' onClose = {onClose}>
-      <img className={ingredientDetailsStyles.img} src={item.image_large} alt="Картинка ингридиента" />    
+    <>
+      <img className={ingredientDetailsStyles.img} src={item.image_large} alt={`Картинка ${item.name}`} />    
       <p className={`${ingredientDetailsStyles.name} text text-center text_type_main-medium mt-4`}>{item.name}</p>
       <div className={`${ingredientDetailsStyles.consist} mt-8 mb-15`}>
         <div className={ingredientDetailsStyles.kbzhu}>
@@ -25,14 +23,13 @@ const IngredientDetails = ({ item, onClose }) => {
           <p className="text text_type_main-default text_color_inactive">Углеводы, г</p>
           <p className="text text_type_digits-default text-center text_color_inactive mt-2">{item.carbohydrates}</p>
         </div>                               
-      </div>      
-    </Modal>
+      </div>    
+    </>    
   )
 }
 
 IngredientDetails.propTypes = {
-    item: ingredientType.isRequired,
-    onClose: PropTypes.func.isRequired
+    item: ingredientType.isRequired
 }
 
 export default IngredientDetails;
