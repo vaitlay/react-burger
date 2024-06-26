@@ -34,7 +34,6 @@ function App() {
   React.useEffect(() => {
     loadIngredientsData()
       .then(data => {
-        console.log(data);
         setLoadingState({ data: data, isLoading: false, isError: false });
       })
       .catch(err => {
@@ -59,21 +58,3 @@ function App() {
 }
 
 export default App
-
-
-/*
- const loadIngredientsData = async () => {
-    setLoadingState({...loadingState, isLoading: true});
-    try {
-      const res = await fetch(IngredientsUrl);
-      if (res.status >= 400) throw Error(`Ошибка соединения с сервером: ${res.statusText}`);
-      if (res.ok) const data = await res.json();
-      if (data.length === 0 ) throw Error('Нет данных от сервера');
-      setLoadingState({...loadingState, isLoading: false, data: data.data})
-    }
-    catch (err) {
-      setLoadingState({ ...loadingState, hasError: true, isLoading: false, errorMessage: err});
-      console.log(`Ошибка - ${err}`);
-    } 
-  }
-*/

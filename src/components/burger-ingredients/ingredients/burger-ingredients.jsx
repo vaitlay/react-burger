@@ -11,30 +11,37 @@ const BurgerIngredients = ({ ingredients }) =>
   const sauces = ingredients.filter(component => component.type === 'sauce');
   const mains = ingredients.filter(component => component.type === 'main');
 
-  const [current, setCurrent] = React.useState('bun')
-  
+  const tabHeaderRefs = {
+    'bun' : React.useRef(null),
+    'sauce' : React.useRef(null),
+    'main' : React.useRef(null)
+  }
 
+  const [currentTab, setCurrentTab] = React.useState('bun')
 
-
+  const srollToSelectedTab = (tabValue) => {
+    setCurrentTab(tabValue);
+    tabHeaderRefs[tabValue].current.scrollIntoView();
+  }
 
   return (
     <section className = {burgerStyles.section}>
       <h1 className = 'text text_type_main-large'>Соберите бургер</h1>
       <div className = {burgerStyles.tabs}>
-        <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>
+        <Tab value="bun" active={currentTab === 'bun'} onClick={srollToSelectedTab}>
           Булки
         </Tab>
-        <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>
+        <Tab value="sauce" active={currentTab === 'sauce'} onClick={srollToSelectedTab}>
           Соусы
         </Tab>
-        <Tab value="main" active={current === 'main'} onClick={setCurrent}>
+        <Tab value="main" active={currentTab === 'main'} onClick={srollToSelectedTab}>
           Начинки
         </Tab>
       </div>
       <section className={`custom-scroll ${burgerStyles.scroll}`}>  
-        {current === 'bun' && <IngredientList type = 'Булки' items = {buns}/>}
-        {current === 'sauce' && <IngredientList type = 'Соусы' items = {sauces}/>}
-        {current === 'main' && <IngredientList type = 'Начинки' items = {mains}/>}
+        {<IngredientList type = 'Булки' ref = {tabHeaderRefs.bun} items = {buns}/>}
+        {<IngredientList type = 'Соусы' ref = {tabHeaderRefs.sauce} items = {sauces}/>}
+        {<IngredientList type = 'Начинки' ref = {tabHeaderRefs.main} items = {mains}/>}
       </section>
     </section>
   )

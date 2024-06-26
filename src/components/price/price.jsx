@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import priceStyles from './price.module.css';
 
@@ -12,10 +12,15 @@ const Price = ( {size, value, iconType} ) => {
     )
   }
 
-Price.defaultProps = {
-    size: "default",
-    iconType: "primary",
-    value : '9999'
-};
+
+
+Price.propTypes = {
+  size: PropTypes.string,
+  iconType: PropTypes.string,
+  value : PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.number
+  ]).isRequired
+}
 
 export default Price;
