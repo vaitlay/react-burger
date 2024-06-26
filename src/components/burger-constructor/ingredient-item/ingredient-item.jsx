@@ -3,6 +3,35 @@ import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger
 import itemStyles from './ingredient-item.module.css';
 import PropTypes from 'prop-types'
 
+const IngredientItem = ({ type, name, price, imageSrc }) => {
+  return (
+    <div className = {itemStyles.item}> 
+      { type ? null : <DragIcon type='primary'/>}
+      <ConstructorElement extraClass = {`${type ? 'ml-8' : 'ml-2'} mt-2`}
+        type={type}
+        isLocked={!type ? false : true}
+        text={`${name} ${type === 'top' ? '(верх)' : type === 'bottom' ? '(низ)' : ''}`}
+        price={price}
+        thumbnail={imageSrc}
+      />
+    </div>     
+  )
+}
+
+
+
+
+IngredientItem.propTypes = {
+  type: PropTypes.string,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  imageSrc: PropTypes.string
+}
+
+
+export default IngredientItem;
+
+/*
 class IngredientItem extends React.Component{
   render() {
     return (
@@ -19,14 +48,4 @@ class IngredientItem extends React.Component{
     )
   }
 }
-
-IngredientItem.propTypes = {
-  type: PropTypes.string,
-  isLocked: PropTypes.bool,
-  text: PropTypes.string,
-  price: PropTypes.number,
-  imageSrc: PropTypes.string
-}
-
-
-export default IngredientItem;
+*/
