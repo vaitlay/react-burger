@@ -1,39 +1,66 @@
 import React from 'react'
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useModal } from '../../../hooks/useModal.js'
+import { useSelector, useDispatch } from 'react-redux';
+import { useDrop } from 'react-dnd';
+import { ADD_INGREDIENT, ADD_BUNS} from '../../../services/actions/constructor-list.js';
 import listStyles from './burger-constructor.module.css';
 import IngredientItem from '../ingredient-item/ingredient-item.jsx';
 import Price from '../../price/price.jsx';
 import OrderDetails from '../../order-details/order-details.jsx'
-import {ingredientsData} from '../../../utils/data.js';
-import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../../modal/modal.jsx'
-import { useModal } from '../../../hooks/useModal.js'
 
 const BurgerConstructor = () => {
-  //temp data...
-  const tempItems = ingredientsData.slice(1,12);
-  const tempBun = ingredientsData[0];
-  const total = tempItems.reduce((sum, item) => {return sum + Number(item.price)},0)  + 2 * tempBun.price;
-  const orderId = '034536';
+
+  const dispatch = useDispatch();
+
+  const { buns, ingredients } = useSelector(state => state.constructorListReducer);
+  const calculatedTotal = React.useMemo(() => {
+    return buns.reduce((sum, item) => sum + Number(item.price),0) + ingredients.reduce((sum, item) => sum + Number(item.price),0);
+  },[buns, ingredients])
   
   const { isModalOpen, openModal, closeModal } = useModal();
 
+  const [, dropBetweenBunsItemRef] = useDrop({
+    accept: 'betweenBunsItem',
+    drop(betweenBunsItem) {
+      dispatch({
+        type: ADD_INGREDIENT,
+        payload: betweenBunsItem
+      });
+    },
+  });
+
+  const [, dropBunsRef] = useDrop({
+    accept: 'bun',
+    drop(bun) {
+        dispatch({
+            type: ADD_BUNS,
+            payload: bun
+        });
+    },
+  });  
+
+
   return (
     <section className = {`${listStyles.container} mt-20 ml-5`} >
-      <IngredientItem type = 'top' name = {tempBun.name} price = {tempBun.price} imageSrc = {tempBun.image_mobile} />
-      <div className = {listStyles.betweenBunsSpace}>
-      {tempItems.map((item, index) => {
-        return <IngredientItem key = {index}  name = {item.name} price = {item.price} imageSrc = {item.image_mobile}/>
+      <div ref = {dropBunsRef}>
+      <IngredientItem ingredient = {buns[0]} />
+      </div>
+      <div className = {listStyles.betweenBunsSpace} ref = {dropBetweenBunsItemRef}>
+      {ingredients.map((item, index) => {
+        return <IngredientItem key = {item.id} ingredient = {item} />
       })}
       </div>
-      <IngredientItem type = 'bottom' name = {tempBun.name} price = {tempBun.price} imageSrc = {tempBun.image_mobile} />
+      <IngredientItem ingredient = {buns[1]} />
       <div className = {`${listStyles.submitContainer} mt-10`}>
-        <Price value = {`${total}`} size = 'medium' />
+        <Price value = {`${calculatedTotal}`} size = 'medium' />
         <Button htmlType="button" type="primary" size="large" extraClass = 'ml-10 mr-4' onClick = {openModal}>Оформить заказ</Button>
       </div>
       
       {isModalOpen &&
         <Modal header = '' onClose = {closeModal}>
-          <OrderDetails orderId = {orderId} />
+          <OrderDetails />
         </Modal> 
       }
     </section>  

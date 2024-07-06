@@ -1,28 +1,46 @@
 import React from 'react';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerStyles from './burger-ingredients.module.css';
-import {ingredientsData} from '../../../utils/data.js';
+//import {ingredientsData} from '../../../utils/data.js';
 import IngredientList from '../list/burger-ingredient-list.jsx';
+import { useSelector } from 'react-redux';
 
-const BurgerIngredients = ({ ingredients }) =>
+
+const BurgerIngredients = () =>
 {
+  const { ingredientsData } = useSelector(state => state.loadIngredientsReducer);
 
-  const buns = ingredients.filter(component => component.type === 'bun');
-  const sauces = ingredients.filter(component => component.type === 'sauce');
-  const mains = ingredients.filter(component => component.type === 'main');
+  const buns = ingredientsData.filter(component => component.type === 'bun');
+  const sauces = ingredientsData.filter(component => component.type === 'sauce');
+  const mains = ingredientsData.filter(component => component.type === 'main');
 
   const tabHeaderRefs = {
     'bun' : React.useRef(null),
     'sauce' : React.useRef(null),
     'main' : React.useRef(null)
   }
-
   const [currentTab, setCurrentTab] = React.useState('bun')
 
+  //Доработка интерфейса навигации по ингредиентам
   const srollToSelectedTab = (tabValue) => {
     setCurrentTab(tabValue);
     tabHeaderRefs[tabValue].current.scrollIntoView();
   }
+  
+
+  const onScroll = (e) => {
+    const ingredientListPos = document.getElementById('ingredientListSection').offsetTop;
+    const currentScrollRelativePos = e.currentTarget.scrollTop + ingredientListPos;
+    const bunsScrollRelativePos = Math.abs(tabHeaderRefs['bun'].current.offsetTop - currentScrollRelativePos);
+    const saucesScrollRelativePos = Math.abs(tabHeaderRefs['sauce'].current.offsetTop - currentScrollRelativePos);
+    const mainsScrollRelativePos = Math.abs(tabHeaderRefs['main'].current.offsetTop - currentScrollRelativePos);
+   
+    let minDistance = Math.min(bunsScrollRelativePos, saucesScrollRelativePos, mainsScrollRelativePos);
+    if (minDistance === bunsScrollRelativePos) setCurrentTab('bun')
+    if (minDistance === saucesScrollRelativePos) setCurrentTab('sauce')
+    if (minDistance === mainsScrollRelativePos) setCurrentTab('main')
+  }
+  //-------------------------------------------------
 
   return (
     <section className = {burgerStyles.section}>
@@ -38,42 +56,13 @@ const BurgerIngredients = ({ ingredients }) =>
           Начинки
         </Tab>
       </div>
-      <section className={`custom-scroll ${burgerStyles.scroll}`}>  
-        {<IngredientList type = 'Булки' ref = {tabHeaderRefs.bun} items = {buns}/>}
-        {<IngredientList type = 'Соусы' ref = {tabHeaderRefs.sauce} items = {sauces}/>}
-        {<IngredientList type = 'Начинки' ref = {tabHeaderRefs.main} items = {mains}/>}
+      <section id = 'ingredientListSection' className={`custom-scroll ${burgerStyles.scroll}`} onScroll = {onScroll}>  
+        {<IngredientList type = 'bun' ref = {tabHeaderRefs.bun} items = {buns}/>}
+        {<IngredientList type = 'sauce' ref = {tabHeaderRefs.sauce} items = {sauces}/>}
+        {<IngredientList type = 'main' ref = {tabHeaderRefs.main} items = {mains}/>}
       </section>
     </section>
   )
 }  
 
 export default BurgerIngredients;
-
-
-/*
-class BurgerIngredients extends React.Component{
-  render() {
-    return (
-      <section className = {burgerStyles.section}>
-        <h1 className = 'text text_type_main-large'>Соберите бургер</h1>
-        <div className = {burgerStyles.tabs}>
-          <Tab value="bun" active={true} >
-            Булки
-          </Tab>
-          <Tab value="sauce" active={false} >
-            Соусы
-          </Tab>
-          <Tab value="main" active={false} >
-            Начинки
-          </Tab>
-        </div>
-        <section className={`custom-scroll ${burgerStyles.scroll}`}>  
-          <IngredientList type = 'Булки' items = {buns}/>
-          <IngredientList type = 'Соусы' items = {sauces}/>
-          <IngredientList type = 'Начинки' items = {mains}/>
-        </section>
-      </section>
-    )
-  }
-}
-*/
