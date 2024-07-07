@@ -1,13 +1,12 @@
-import { ADD_BUNS, ADD_INGREDIENT, REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../actions/constructor-list.js'
-import { generateUniqueId } from '../../utils/generate-id.js'
+import { ADD_BUNS, REMOVE_INGREDIENT, MOVE_INGREDIENT, ADD_INGREDIENT, CLEAR_INGREDIENTS } from '../actions/constructor-list.js'
 
 const initialState = {
   buns: [
-    {bunLocation: 'top', name : 'Выберите булки', price : '0', id: generateUniqueId()},
-    {bunLocation: 'bottom', name : 'Выберите булки', price : '0', id: generateUniqueId()}        
+    {bunLocation: 'top', name : 'Выберите булки', price : '0', id: 'defaultTopBunId'},
+    {bunLocation: 'bottom', name : 'Выберите булки', price : '0', id: 'defaultBottomBunId'}        
   ],
   ingredients: [
-    {name : 'Выберите начинку', id: generateUniqueId(), price : '0'}
+    {name : 'Выберите начинку', id: 'defaultIngredientId', price : '0'}
   ]
 };
 
@@ -17,14 +16,15 @@ const constructorListReducer = (state = initialState, action) => {
     case ADD_BUNS: {
       return {
         ...state,
-        buns: [{...action.payload, bunLocation: 'top', id: generateUniqueId()}, 
-               {...action.payload, bunLocation: 'bottom', id: generateUniqueId()}]
+        buns: [{...action.payload, bunLocation: 'top'}, 
+               {...action.payload, bunLocation: 'bottom'}]
       };
     }
     case ADD_INGREDIENT: {  
       return {
           ...state,
-          ingredients: [...state.ingredients.filter(ingr => ingr.name !== 'Выберите начинку'), {...action.payload, id: generateUniqueId()}]
+          ingredients: [...state.ingredients.filter(ingr => ingr.name !== 'Выберите начинку'), 
+            {...action.payload}]
       };
     }
     case REMOVE_INGREDIENT: {
@@ -32,7 +32,7 @@ const constructorListReducer = (state = initialState, action) => {
         ...state,
         ingredients: state.ingredients.length > 1 
           ? state.ingredients.filter(ingr => ingr.id !== action.payload) 
-          : [{name : 'Выберите начинку', id: generateUniqueId(), price : '0'}]
+          : [{name : 'Выберите начинку', id: 'defaultIngredientId', price : '0'}]
       };
     } 
     case MOVE_INGREDIENT: {
@@ -45,7 +45,10 @@ const constructorListReducer = (state = initialState, action) => {
         ...state,
         ingredients: sortedIngredient
       };
-    }            
+    } 
+    case CLEAR_INGREDIENTS: {
+      return initialState;
+    }           
     default: {
       return state;
     }

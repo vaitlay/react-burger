@@ -30,10 +30,6 @@ const IngredientDetails = () => {
   )
 }
 
-IngredientDetails.propTypes = {
-    item: ingredientType.isRequired
-}
-
 export default IngredientDetails;
 
 

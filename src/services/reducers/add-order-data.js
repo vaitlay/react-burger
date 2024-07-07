@@ -22,7 +22,7 @@ const addOrderReducer = (state = initialState, action) => {
         isLoading: false,
         hasError: false,
         errorMessage: '',
-        orderId: action.payload.number
+        orderId: action.payload.order.number
       };
     }
     case ADD_ORDER_FAILED: {

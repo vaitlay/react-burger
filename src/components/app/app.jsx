@@ -12,13 +12,13 @@ import mainStyle from './app.module.css'
 
 function App() {
 
-  const IngredientsUrl = 'https://norma.nomoreparties.space/api/ingredients';
+  const loadIngredientsEndPoint = 'ingredients';
   const { isLoading, hasError, errorMessage } = useSelector(state => state.loadIngredientsReducer);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     console.log("Loading Ingredients...")
-    dispatch(loadIngredientsData(IngredientsUrl))
+    dispatch(loadIngredientsData(loadIngredientsEndPoint))
   },[dispatch]);
 
   if (isLoading) return <p>Идёт загрузка данных с сервера</p>
