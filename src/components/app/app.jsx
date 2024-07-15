@@ -15,7 +15,7 @@ function App() {
   const loadIngredientsEndPoint = 'ingredients';
   const { isLoading, hasError, errorMessage } = useSelector(state => state.loadIngredientsReducer);
   const dispatch = useDispatch();
-
+  
   React.useEffect(() => {
     console.log("Loading Ingredients...")
     dispatch(loadIngredientsData(loadIngredientsEndPoint))
