@@ -1,18 +1,44 @@
-import React from 'react'
-import {ConstructorElement, DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
+import { useDrag, useDrop } from 'react-dnd';
+import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../../services/actions/constructor-list.js';
+import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import itemStyles from './ingredient-item.module.css';
 import PropTypes from 'prop-types'
+import dummyImg from '../../../images/dummy.PNG';
 
-const IngredientItem = ({ type, name, price, imageSrc }) => {
+const IngredientItem = ({ ingredient }) => {
+
+  const dispatch = useDispatch();
+
+  const removeIngredient = (id) => {
+    dispatch({ type: REMOVE_INGREDIENT, payload: id});
+  }
+
+  const [, draggedIngredientRef] = useDrag({
+    type : 'betweenBunsItemSort',
+    item : ingredient
+  });
+
+  const [, dropIngredientRef] = useDrop({
+    accept: 'betweenBunsItemSort',
+    drop(betweenBunsItem) {
+      dispatch({ 
+        type: MOVE_INGREDIENT, 
+        payload: {dropIngredient: ingredient , dragIngredient: betweenBunsItem }
+      });
+    },
+  })
+
   return (
-    <div className = {itemStyles.item}> 
-      { type ? null : <DragIcon type='primary'/>}
-      <ConstructorElement extraClass = {`${type ? 'ml-8' : 'ml-2'} mt-2`}
-        type={type}
-        isLocked={!type ? false : true}
-        text={`${name} ${type === 'top' ? '(верх)' : type === 'bottom' ? '(низ)' : ''}`}
-        price={price}
-        thumbnail={imageSrc}
+    <div className = {itemStyles.item} ref = {!ingredient.bunLocation ? (refDnd) => draggedIngredientRef(dropIngredientRef(refDnd)) : null}> 
+      { ingredient.bunLocation ? null : <DragIcon type='primary'/>}
+      <ConstructorElement extraClass = {`${ingredient.bunLocation ? 'ml-8' : 'ml-2'} mt-2`}
+        type={ingredient.bunLocation}
+        isLocked={!ingredient.bunLocation ? false : true}
+        text={`${ingredient.name} ${ingredient.bunLocation === 'top' ? '(верх)' : ingredient.bunLocation === 'bottom' ? '(низ)' : ''}`}
+        price={ingredient.price}
+        thumbnail={ingredient.image_mobile ? ingredient.image_mobile: dummyImg}
+        handleClose={() => removeIngredient(ingredient.id)}
       />
     </div>     
   )
@@ -22,30 +48,11 @@ const IngredientItem = ({ type, name, price, imageSrc }) => {
 
 
 IngredientItem.propTypes = {
-  type: PropTypes.string,
+  bunLocation: PropTypes.string,
   name: PropTypes.string,
   price: PropTypes.number,
-  imageSrc: PropTypes.string
+  image_mobile: PropTypes.string
 }
 
 
 export default IngredientItem;
-
-/*
-class IngredientItem extends React.Component{
-  render() {
-    return (
-    <div className = {itemStyles.item}> 
-      { this.props.type ? null : <DragIcon type='primary'/>}
-      <ConstructorElement extraClass = {`${this.props.type ? 'ml-8' : 'ml-2'} mt-2`}
-        type={this.props.type}
-        isLocked={!this.props.type ? false : true}
-        text={`${this.props.name} ${this.props.type === 'top' ? '(верх)' : this.props.type === 'bottom' ? '(низ)' : ''}`}
-        price={this.props.price}
-        thumbnail={this.props.imageSrc}
-      />
-    </div>  
-    )
-  }
-}
-*/

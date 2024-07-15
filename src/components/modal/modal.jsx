@@ -6,16 +6,16 @@ import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay.jsx'
 
 const Modal = ({ header, children, onClose }) => {
-  const handleEscape = (e) => {
-    if (e.key === 'Escape') onClose();
-  };
 
   useEffect(() => {
+    const handleEscape = (e) => {
+        if (e.key === 'Escape') onClose();
+      };
     document.addEventListener('keydown', handleEscape);
     return (() => {
       document.removeEventListener('keydown', handleEscape)
     });
-  },[handleEscape]);
+  },[]);
 
 
 
