@@ -16,9 +16,9 @@ export function addCurrentOrder(orderUrl, data) {
       .then(data => {
         dispatch({ type: ADD_ORDER_SUCCESS, payload: data });
       })
-    //   .then(res => {
-    //     dispatch({ type : CLEAR_INGREDIENTS });
-    //   })
+      .then(() => {
+        dispatch({ type : CLEAR_INGREDIENTS });
+      })
       .catch(err => {
         dispatch({ type: ADD_ORDER_FAILED, payload: err });
       });

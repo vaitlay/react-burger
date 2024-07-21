@@ -19,7 +19,6 @@ const OrderDetails = () => {
     for (let bun of buns) orderData.push(bun._id);
     for (let ingr of ingredients) orderData.push(ingr._id);
     dispatch(addCurrentOrder(orderEndPoint, orderData));
-    if (orderId) dispatch({type: CLEAR_INGREDIENTS});
   },[dispatch, buns, ingredients]);
   
 

@@ -4,8 +4,13 @@ import IngredientCard from '../card/ingredient-card.jsx';
 import listStyle from './burger-ingredient-list.module.css';
 import {ingredientType} from '../../../utils/types.js'
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router'
 
 const IngredientList = React.forwardRef(({ type, items }, tabHeaderRef) => {
+
+  const location = useLocation();
+
   const listName = {
     'bun' : 'Булки',
     'sauce' : 'Соусы',
@@ -26,9 +31,14 @@ const IngredientList = React.forwardRef(({ type, items }, tabHeaderRef) => {
       <div className = {`p-0 ${listStyle.list}`}>
       {items.map(item => {
         return (
-          <div className = 'item' key = {item._id}>
+          <Link 
+            style = {{color: '#F2F2F2', textDecoration: 'none'}}
+            key = {item._id} 
+            to={`ingredient/${item._id}`} 
+            state ={{backgroundLocation : location}}
+          >
             <IngredientCard item = {item} count = {countItems[item._id]}/>
-          </div>
+          </Link>
         )
       })}
       </div>

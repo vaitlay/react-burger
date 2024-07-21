@@ -37,11 +37,7 @@ const IngredientCard = ({ item, count }) => {
         <Price value = {item.price} className = 'm-3' />
         <p className={`${cardStyles.text} text text_type_main-small mt-1 mb-4`}>{item.name}</p>
       </div> 
-      {isModalOpen &&
-        <Modal header = 'Детали ингридиента' onClose = {handleCardClose}>
-          <IngredientDetails item={item}/>
-        </Modal>   
-      }
+
       
     </li>
   )
@@ -53,3 +49,8 @@ IngredientCard.propTypes = {
 }
 
 export default IngredientCard;
+
+
+{/* <Modal header = 'Детали ингридиента' onClose = {handleCardClose}>
+<IngredientDetails item={item}/>
+</Modal>    */}
