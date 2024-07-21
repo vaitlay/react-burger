@@ -25,11 +25,10 @@ import {
 
   const initialState = {
     isLoading: false,
-    requestSuccess: false,
     resetPasswordSuccess: false,
     loggedIn: false,
     authChecked: false,
-    hasError: false,
+    hasError: {},
     errorMessage: '',
     user: {},
   };
@@ -49,7 +48,7 @@ import {
           ...state,
           isLoading: true,
           requestSuccess: false,
-          hasError: false,
+          hasError: {},
           errorMessage: '',
           authChecked: false 
         }
@@ -62,34 +61,68 @@ import {
           ...state,
           isLoading: true,
           requestSuccess: false,
-          hasError: false,
+          hasError: {},
           errorMessage: ''   
         };
       }
       case FORGOT_PASSWORD_FAILED:
+        return {
+          ...state,
+          isLoading: false, 
+          requestSuccess: false, 
+          hasError: {forgotPassword: true},
+          errorMessage: action.payload
+         };
       case RESET_PASSWORD_FAILED:
+        return {
+          ...state,
+          isLoading: false, 
+          requestSuccess: false, 
+          hasError: {resetPassword: true},
+          errorMessage: action.payload
+         };
       case REGISTER_FAILED:
+        return {
+          ...state,
+          isLoading: false, 
+          requestSuccess: false, 
+          hasError: {register: true},
+          errorMessage: action.payload
+         };
       case LOGIN_FAILED:
+        return {
+          ...state,
+          isLoading: false, 
+          requestSuccess: false, 
+          hasError: {login: true},
+          errorMessage: action.payload
+         };
       case LOGOUT_FAILED:
       case GET_USER_DATA_FAILED:
+        return {
+          ...state,
+          isLoading: false, 
+          requestSuccess: false, 
+          hasError: {getUserData: true},
+          errorMessage: action.payload
+         };
       case PATCH_USER_DATA_FAILED: {
         return {
            ...state,
            isLoading: false, 
            requestSuccess: false, 
-           hasError: true,
+           hasError: {patchUserData: true},
            errorMessage: action.payload
           };
       }
       case FORGOT_PASSWORD_SUCCESS:
-      case RESET_PASSWORD_SUCCESS:
       case LOGOUT_SUCCESS: {
         return {
           ...state,
           requestSuccess: true,
           isLoading: false,
           loggedIn: false,
-          hasError: false,
+          hasError: {},
           errorMessage: '',   
           user: {}
         };
@@ -99,7 +132,7 @@ import {
           ...state,
           resetPasswordSuccess: true,
           isLoading: false,
-          hasError: false,
+          hasError: {},
           errorMessage: '',   
         }
       case REGISTER_SUCCESS:
@@ -111,7 +144,7 @@ import {
           isLoading: false,
           requestSuccess: true,
           loggedIn: true,
-          hasError: false,
+          hasError: {},
           errorMessage: '',   
           user: action.payload.user,
         }

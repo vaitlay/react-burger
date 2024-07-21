@@ -1,10 +1,13 @@
+import itemStyles from './ingredient-item.module.css';
+import dummyImg from '../../../images/dummy.PNG';
+import PropTypes from 'prop-types'
+
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../../services/actions/constructor-list.js';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import itemStyles from './ingredient-item.module.css';
-import PropTypes from 'prop-types'
-import dummyImg from '../../../images/dummy.PNG';
+
+
 
 const IngredientItem = ({ ingredient }) => {
 
@@ -43,9 +46,6 @@ const IngredientItem = ({ ingredient }) => {
     </div>     
   )
 }
-
-
-
 
 IngredientItem.propTypes = {
   bunLocation: PropTypes.string,

@@ -1,29 +1,25 @@
 import styles from '../page.module.css';
-import { Input, PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-
 import { useEffect } from 'react';
 import { Outlet } from 'react-router'
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import  ProfileForm  from './profile-form.jsx';
 
-import { getUserData, patchUserData, logout } from '../../services/actions/auth.js';
-import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_LOGOUT, ROUTE_ROOT } from '../../utils/route-endpoints.js';
+import { getUserData, logout } from '../../services/actions/auth.js';
+import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_ROOT } from '../../utils/route-endpoints.js';
 
 
 const ProfilePage = () => {
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const { requestSuccess, loggedIn, isLoading, hasError, errorMessage, user } = useSelector(state => state.authReducer);
+  const { authChecked } = useSelector(state => state.authReducer);
   
   const handleLogout = () => {
     dispatch(logout());
   }
 
   useEffect(() => {
-    dispatch(getUserData());
+    if (!authChecked) dispatch(getUserData());
   }, [])
 
   return (

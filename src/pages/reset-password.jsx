@@ -6,7 +6,7 @@ import { useInput } from '../hooks/useInput.js';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { resetPassword, getUserData } from '../services/actions/auth.js';
+import { resetPassword } from '../services/actions/auth.js';
 import { ROUTE_LOGIN } from '../utils/route-endpoints.js';
 
 
@@ -16,7 +16,7 @@ const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { requestSuccess, isLoading, hasError, errorMessage, resetPasswordSuccess } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage, resetPasswordSuccess } = useSelector(state => state.authReducer);
   const [currentPassword, onChangePassword] = useInput();
   const [currentToken, onChangeToken] = useInput();
 
@@ -26,7 +26,6 @@ const ResetPasswordPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(`currentPassword - ${currentPassword}`)
     dispatch(resetPassword({
       newPassword: currentPassword,
       token: currentToken
@@ -59,10 +58,10 @@ const ResetPasswordPage = () => {
       />
       <Button htmlType='submit' type='primary' size='large' extraClass='mt-6' >Сохранить</Button>
       {isLoading && <p>Loading...</p>}
-      {hasError && <p>{errorMessage}. Попробуйте лучше вспомнить пароль</p>}
+      {hasError.resetPassword && <p>{errorMessage}. Попробуйте лучше вспомнить пароль</p>}
       <p className='text text_type_main_default text_color_inactive mt-4'>
         Вспомнили пароль?
-        <Link to={'/login'} className='ml-2'>Войти</Link>
+        <Link to={'/login'} className='ml-2' style={{ textDecoration: 'inherit' }}>Войти</Link>
       </p>
     </form>
   )

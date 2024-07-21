@@ -13,7 +13,7 @@ const ProfileForm = () => {
   const [currentLogin, onChangeLogin, setLogin] = useInput('');
   const [currentPassword, onChangePassword] = useInput('******');
 
-  const { requestSuccess, loggedIn, isLoading, hasError, errorMessage, user } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage, user } = useSelector(state => state.authReducer);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,7 +31,7 @@ const ProfileForm = () => {
   }, [user])
 
   return(
-    <form className={`${styles.formContainer} ml-15`} onSubmit={handleSubmit}>
+    <form className={`${styles.profileFormContainer} ml-15`} onSubmit={handleSubmit}>
     {isLoading && <p>Отправка запроса ...</p>}
     {hasError && <p>{errorMessage}. Что-то пошло не так...</p>}
     <Input type={'text'}

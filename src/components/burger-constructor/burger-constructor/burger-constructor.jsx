@@ -1,27 +1,31 @@
-import React from 'react'
+import listStyles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { useMemo } from 'react'
 import { useModal } from '../../../hooks/useModal.js'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router'
 import { useDrop } from 'react-dnd';
-import { addIngredient, addBuns, CLEAR_INGREDIENTS} from '../../../services/actions/constructor-list.js';
-import listStyles from './burger-constructor.module.css';
+
+import { addIngredient, addBuns } from '../../../services/actions/constructor-list.js';
+import { addCurrentOrder } from '../../../services/actions/add-order-data.js';
+import { ROUTE_LOGIN } from '../../../utils/route-endpoints.js'
+
 import IngredientItem from '../ingredient-item/ingredient-item.jsx';
 import Price from '../../price/price.jsx';
 import OrderDetails from '../../order-details/order-details.jsx'
 import Modal from '../../modal/modal.jsx'
-import { ROUTE_LOGIN } from '../../../utils/route-endpoints.js'
+
 
 const BurgerConstructor = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { buns, ingredients } = useSelector(state => state.constructorListReducer);
-  const { orderId, hasError } = useSelector(state => state.addOrderReducer);
   const { loggedIn } = useSelector(state => state.authReducer);
+  const { buns, ingredients } = useSelector(state => state.constructorListReducer);
   
-  const calculatedTotal = React.useMemo(() => {
+  const calculatedTotal = useMemo(() => {
     return buns.reduce((sum, item) => sum + Number(item.price),0) + ingredients.reduce((sum, item) => sum + Number(item.price),0);
   },[buns, ingredients])
   
@@ -41,11 +45,17 @@ const BurgerConstructor = () => {
     },
   });  
 
+
   const handleAddOrder = () => {
     if (!loggedIn) {   
       navigate(ROUTE_LOGIN);
     } else {
+      console.log('Order sending...')
       openModal();
+      const orderData = [];
+      for (let bun of buns) orderData.push(bun._id);
+      for (let ingr of ingredients) orderData.push(ingr._id);
+      dispatch(addCurrentOrder(orderData));
     }
   }
 

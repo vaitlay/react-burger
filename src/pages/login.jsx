@@ -1,18 +1,18 @@
-import { useEffect } from 'react';
 import styles from './page.module.css';
 import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Link, useNavigate} from 'react-router-dom';
+
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useInput } from '../hooks/useInput.js';
-import { ROUTE_ROOT, ROUTE_FORGOT_PASSWORD, ROUTE_REGISTER } from '../utils/route-endpoints.js';
-import { login, getUserData} from '../services/actions/auth.js';
+import { ROUTE_FORGOT_PASSWORD, ROUTE_REGISTER } from '../utils/route-endpoints.js';
+import { login } from '../services/actions/auth.js';
 
 const LoginPage = () => {
 
   const dispatch = useDispatch();
   const [ currentEmail, onChangeEmail ] = useInput();
   const [ currentPassword, onChangePassword ] = useInput();
-  const { requestSuccess, isLoading, hasError, errorMessage, loggedIn } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage } = useSelector(state => state.authReducer);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,14 +41,14 @@ const LoginPage = () => {
       />
       <Button htmlType='submit' type='primary' size='large' extraClass='mt-6'>Войти</Button>
       { isLoading && <p>Авторизация ...</p> }
-      { errorMessage === 'no Token' ? null : hasError && <p>{errorMessage} Что-то пошло не так...</p>}
+      { hasError.login && <p>{errorMessage} Что-то пошло не так...</p>}
       <p className = 'text text_type_main_default text_color_inactive mt-20'>
         Вы - новый пользователь?
-        <Link to = {ROUTE_REGISTER} className = 'ml-2'>Зарегистрироваться</Link>
+        <Link to = {ROUTE_REGISTER} className = 'ml-2' style={{ textDecoration: 'inherit' }}>Зарегистрироваться</Link>
       </p>
       <p className = 'text text_type_main_default text_color_inactive mt-4'>
         Забыли пароль?
-        <Link to = {ROUTE_FORGOT_PASSWORD} className = 'ml-2'>Восстановить пароль</Link>
+        <Link to = {ROUTE_FORGOT_PASSWORD} className = 'ml-2' style={{ textDecoration: 'inherit' }}>Восстановить пароль</Link>
       </p>
 
     </form>

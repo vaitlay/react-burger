@@ -1,4 +1,3 @@
-import { request } from '../../utils/request.js'
 import { 
   forgotPasswordRequest,
   resetPasswordRequest,
@@ -61,7 +60,6 @@ export const forgotPassword = ({ email }) => {
 export const resetPassword = ({ newPassword, token }) => {
   return function(dispatch) {
     dispatch({ type: RESET_PASSWORD_REQUEST });
-    console.log(`newPassword = ${newPassword}`)
     resetPasswordRequest({ newPassword, token })
       .then(data => {
         dispatch({

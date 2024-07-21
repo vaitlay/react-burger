@@ -1,9 +1,13 @@
-import React from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import mainStyle from './app.module.css'
+
+import { Routes, Route } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import ProtectedRouteElement from '../protected-route-element/protected-route-element.jsx'
 import AppHeader from '../app-header/header/app-header.jsx'
+import IngredientDetails from '../ingredient-details/ingredient-details.jsx'
+import Modal from '../modal/modal.jsx';
+
 import MainPage from '../../pages/main.jsx'
 import LoginPage from '../../pages/login.jsx'
 import RegisterPage from '../../pages/register.jsx'
@@ -14,9 +18,6 @@ import ProfileForm from '../../pages/profile/profile-form.jsx'
 import Orders from '../../pages/profile/orders.jsx'
 import IngredientPage from '../../pages/ingredient.jsx'
 import NotFound404 from '../../pages/not-found.jsx'
-import mainStyle from './app.module.css'
-import Modal from '../modal/modal.jsx';
-import IngredientDetails from '../ingredient-details/ingredient-details.jsx'
 
 import { 
   ROUTE_LOGIN, 

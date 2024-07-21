@@ -1,16 +1,15 @@
-
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Navigate, useNavigate, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import propTypes from 'prop-types';
 import { getUserData } from '../../services/actions/auth';
 import { ROUTE_LOGIN } from '../../utils/route-endpoints';
 
 const ProtectedRouteElement = ({ onlyAuth, element }) => {
-  const { loggedIn, isLoading, authChecked} = useSelector(state => state.authReducer);
+  const { loggedIn, authChecked} = useSelector(state => state.authReducer);
   const dispatch = useDispatch();
   const location = useLocation();
-  const navigate = useNavigate();
+
     
   useEffect(() => {
     if (!authChecked) dispatch(getUserData());

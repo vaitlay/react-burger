@@ -9,7 +9,20 @@ export const API_UPDATE_TOKEN = 'auth/token'
 export const API_USER_DATA = 'auth/user'
 
 export const API_LOAD_INGREDIENTS = 'ingredients'
+export const API_ADD_ORDER = 'orders'
 
+export const loadIngredientsDataRequest = () => {
+  return request(API_LOAD_INGREDIENTS);
+}
+
+
+export const addCurrentOrderRequest = (orderData) => {
+  return request(API_ADD_ORDER, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({ingredients: orderData})
+  });
+}
 
 export const forgotPasswordRequest = ({ email }) => {
   return request(API_FORGOT_PASSWORD, {

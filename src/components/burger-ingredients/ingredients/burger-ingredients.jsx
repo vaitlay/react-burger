@@ -1,10 +1,10 @@
-import React from 'react';
-import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import burgerStyles from './burger-ingredients.module.css';
-//import {ingredientsData} from '../../../utils/data.js';
-import IngredientList from '../list/burger-ingredient-list.jsx';
+import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+
+import { useRef, useState} from 'react';
 import { useSelector } from 'react-redux';
 
+import IngredientList from '../list/burger-ingredient-list.jsx';
 
 const BurgerIngredients = () =>
 {
@@ -15,11 +15,11 @@ const BurgerIngredients = () =>
   const mains = ingredientsData.filter(component => component.type === 'main');
 
   const tabHeaderRefs = {
-    'bun' : React.useRef(null),
-    'sauce' : React.useRef(null),
-    'main' : React.useRef(null)
+    'bun' : useRef(null),
+    'sauce' : useRef(null),
+    'main' : useRef(null)
   }
-  const [currentTab, setCurrentTab] = React.useState('bun')
+  const [currentTab, setCurrentTab] = useState('bun')
 
   //Доработка интерфейса навигации по ингредиентам
   const srollToSelectedTab = (tabValue) => {
