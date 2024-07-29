@@ -1,18 +1,25 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import IngredientCard from '../card/ingredient-card.jsx';
 import listStyle from './burger-ingredient-list.module.css';
-import {ingredientType} from '../../../utils/types.js'
-import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types'
 
-const IngredientList = React.forwardRef(({ type, items }, tabHeaderRef) => {
+import { useMemo, forwardRef } from 'react'
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom'
+import { useLocation } from 'react-router'
+import { ingredientType } from '../../../utils/types.js'
+
+import IngredientCard from '../card/ingredient-card.jsx';
+
+const IngredientList = forwardRef(({ type, items }, tabHeaderRef) => {
+
+  const location = useLocation();
+
   const listName = {
     'bun' : 'Булки',
     'sauce' : 'Соусы',
     'main' : 'Начинка'
   }
   const { buns, ingredients } = useSelector(state => state.constructorListReducer);
-  const countItems = React.useMemo(() => {
+  const countItems = useMemo(() => {
     const itemsCounter = {};
     for (let ingr of ingredients) itemsCounter[ingr._id] ? itemsCounter[ingr._id]++ : itemsCounter[ingr._id] = 1;
     for (let bun of buns) itemsCounter[bun._id] ? itemsCounter[bun._id]++ : itemsCounter[bun._id] = 1;
@@ -26,9 +33,14 @@ const IngredientList = React.forwardRef(({ type, items }, tabHeaderRef) => {
       <div className = {`p-0 ${listStyle.list}`}>
       {items.map(item => {
         return (
-          <div className = 'item' key = {item._id}>
+          <Link 
+            style = {{color: '#F2F2F2', textDecoration: 'none'}}
+            key = {item._id} 
+            to={`ingredient/${item._id}`} 
+            state ={{backgroundLocation : location}}
+          >
             <IngredientCard item = {item} count = {countItems[item._id]}/>
-          </div>
+          </Link>
         )
       })}
       </div>
@@ -39,7 +51,6 @@ const IngredientList = React.forwardRef(({ type, items }, tabHeaderRef) => {
 
 IngredientList.propTypes = {
   type: PropTypes.string,
-  //tabHeader: PropTypes.string,
   items: PropTypes.arrayOf(ingredientType).isRequired
 }
 

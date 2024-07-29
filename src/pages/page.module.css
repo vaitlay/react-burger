@@ -1,0 +1,39 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 20%;
+}
+
+.profileContainer {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    top: 20%;
+}
+
+.profileFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.profileNav {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+.profileNavActive {
+    color: #F2F2F2;
+}
+
+.profileFormButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.ingredientContainer {
+    position: absolute;
+    top: 20%;
+}

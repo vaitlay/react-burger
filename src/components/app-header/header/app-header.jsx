@@ -1,17 +1,42 @@
-import React from 'react'
 import headerStyles from './app-header.module.css';
-import NavItem from '../nav-item/nav-item.jsx'
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink } from 'react-router-dom';
+import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_ROOT } from '../../../utils/route-endpoints.js'
 
 const AppHeader = () => {
   return (
     <header className = {headerStyles.header}>
       <div className = {headerStyles.leftNav}>
-        <NavItem link = ''><p className = 'text text_type_main-default m-2'>Конструктор</p><BurgerIcon type="primary"/></NavItem>
-        <NavItem link = ''><p className = 'text text_type_main-default text_color_inactive m-2'>Лента заказов</p><ListIcon type="secondary"/></NavItem>
+        <NavLink 
+          to={ROUTE_ROOT} end 
+          className = {`text text_type_main-default ${headerStyles.navItem}`} 
+        >{({ isActive }) => (
+          <>
+            <p className = {isActive? '' : 'text_color_inactive'}>Конструктор</p>
+            <BurgerIcon type= {isActive? 'primary' : 'secondary'}/>
+          </>
+        )}
+        </NavLink>
+        <NavLink to={ROUTE_ORDERS} 
+          className = {`text text_type_main-default ml-6 ${headerStyles.navItem}`} 
+        >{({ isActive }) => (
+          <>
+            <p className = {isActive? '' : 'text_color_inactive'}>Лента заказов</p>
+            <ListIcon type= {isActive? 'primary' : 'secondary'} />
+          </>
+        )}
+        </NavLink>
       </div>
       <Logo />
-      <NavItem link = ''><ProfileIcon type="secondary"/><p className = 'text text_type_main-default text_color_inactive m-2'>Личный кабинет</p></NavItem>
+      <NavLink  to={ROUTE_PROFILE} end
+        className = {`text text_type_main-default ${headerStyles.navItem}`} 
+      >{({ isActive }) => (
+        <>
+          <p className = {isActive? '' : 'text_color_inactive'}>Личный кабинет</p>
+          <ProfileIcon type= {isActive? 'primary' : 'secondary'}/>
+        </>
+      )}
+      </NavLink>
     </header>
     )
   }

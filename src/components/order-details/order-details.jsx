@@ -1,27 +1,11 @@
-import React from 'react';
 import orderDetailsStyles from './order-details.module.css';
 import doneImg from '../../images/done.png';
-import { useSelector, useDispatch } from 'react-redux'
-import { addCurrentOrder } from '../../services/actions/add-order-data.js'
-import { CLEAR_INGREDIENTS } from '../../services/actions/constructor-list.js';
+import { useSelector } from 'react-redux'
+
 
 const OrderDetails = () => {
 
-  const dispatch = useDispatch();  
-
-  const orderEndPoint = 'orders';
   const { orderId, isLoading, hasError, errorMessage } = useSelector(state => state.addOrderReducer);
-  const { buns, ingredients } = useSelector(state => state.constructorListReducer);
-
-  React.useEffect(() => {
-    console.log("Order sending...")
-    const orderData = [];
-    for (let bun of buns) orderData.push(bun._id);
-    for (let ingr of ingredients) orderData.push(ingr._id);
-    dispatch(addCurrentOrder(orderEndPoint, orderData));
-    if (orderId) dispatch({type: CLEAR_INGREDIENTS});
-  },[dispatch, buns, ingredients]);
-  
 
   if (isLoading) return <p>Формирование заказа</p>
   else if (hasError) return <p>{`Ошибка - ${errorMessage}`}</p>
