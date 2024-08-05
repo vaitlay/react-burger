@@ -2,7 +2,7 @@ import listStyles from './burger-constructor.module.css';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useMemo } from 'react'
-import { useModal } from '../../../hooks/useModal.js'
+import { useModal } from '../../../hooks/useModal'
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router'
 import { useDrop } from 'react-dnd';
@@ -11,19 +11,21 @@ import { addIngredient, addBuns } from '../../../services/actions/constructor-li
 import { addCurrentOrder } from '../../../services/actions/add-order-data.js';
 import { ROUTE_LOGIN } from '../../../utils/route-endpoints.js'
 
-import IngredientItem from '../ingredient-item/ingredient-item.jsx';
-import Price from '../../price/price.jsx';
-import OrderDetails from '../../order-details/order-details.jsx'
-import Modal from '../../modal/modal.jsx'
+import IngredientItem from '../ingredient-item/ingredient-item';
+import Price from '../../price/price';
+import OrderDetails from '../../order-details/order-details'
+import Modal from '../../modal/modal'
 
+import { TConstructorItem } from '../../../types'
 
-const BurgerConstructor = () => {
+const BurgerConstructor = (): JSX.Element => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loggedIn } = useSelector(state => state.authReducer);
-  const { buns, ingredients } = useSelector(state => state.constructorListReducer);
+  const { loggedIn } = useSelector((state: any) => state.authReducer as {loggedIn : boolean}); //Позже доделать типизацию для redux
+  const { buns, ingredients } = useSelector((state: any) => state.constructorListReducer as {  //Позже доделать типизацию для redux
+    buns: Array<TConstructorItem>, ingredients: Array<TConstructorItem> });
   
   const calculatedTotal = useMemo(() => {
     return buns.reduce((sum, item) => sum + Number(item.price),0) + ingredients.reduce((sum, item) => sum + Number(item.price),0);
@@ -52,10 +54,10 @@ const BurgerConstructor = () => {
     } else {
       console.log('Order sending...')
       openModal();
-      const orderData = [];
+      const orderData: Array<string> = [];
       for (let bun of buns) orderData.push(bun._id);
       for (let ingr of ingredients) orderData.push(ingr._id);
-      dispatch(addCurrentOrder(orderData));
+      dispatch(addCurrentOrder(orderData) as any);  //Позже доделать типизацию для redux
     }
   }
 
@@ -71,7 +73,7 @@ const BurgerConstructor = () => {
       </div>
       <IngredientItem ingredient = {buns[1]} />
       <div className = {`${listStyles.submitContainer} mt-10`}>
-        <Price value = {`${calculatedTotal}`} size = 'medium' />
+        <Price value = {calculatedTotal}  />
         <Button 
           htmlType="button" 
           type="primary" 

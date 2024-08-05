@@ -1,19 +1,18 @@
 import itemStyles from './ingredient-item.module.css';
-import dummyImg from '../../../images/dummy.PNG';
-import PropTypes from 'prop-types'
-
+import dummyImg from '../../../images/dummy.png';
+//import PropTypes from 'prop-types'
+//import { FC } from 'react'
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../../services/actions/constructor-list.js';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { TConstructorItem } from '../../../types'
 
-
-
-const IngredientItem = ({ ingredient }) => {
+const IngredientItem = ({ ingredient }: { ingredient: TConstructorItem}): JSX.Element => {
 
   const dispatch = useDispatch();
-
-  const removeIngredient = (id) => {
+  
+  const removeIngredient = (id: string) :void => {
     dispatch({ type: REMOVE_INGREDIENT, payload: id});
   }
 
@@ -31,7 +30,6 @@ const IngredientItem = ({ ingredient }) => {
       });
     },
   })
-
   return (
     <div className = {itemStyles.item} ref = {!ingredient.bunLocation ? (refDnd) => draggedIngredientRef(dropIngredientRef(refDnd)) : null}> 
       { ingredient.bunLocation ? null : <DragIcon type='primary'/>}
@@ -47,12 +45,12 @@ const IngredientItem = ({ ingredient }) => {
   )
 }
 
-IngredientItem.propTypes = {
-  bunLocation: PropTypes.string,
-  name: PropTypes.string,
-  price: PropTypes.number,
-  image_mobile: PropTypes.string
-}
+// IngredientItem.propTypes = {
+//   bunLocation: PropTypes.string,
+//   name: PropTypes.string,
+//   price: PropTypes.number,
+//   image_mobile: PropTypes.string
+// }
 
 
 export default IngredientItem;

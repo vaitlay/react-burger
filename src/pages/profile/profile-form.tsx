@@ -1,10 +1,10 @@
 import styles from '../page.module.css';
 import { Input, PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useInput } from '../../hooks/useInput.js';
+import { useInput } from '../../hooks/useInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react'
 import { patchUserData } from '../../services/actions/auth.js';
-
+import { TAuth } from '../../types';
 
 const ProfileForm = () => {
 
@@ -13,11 +13,11 @@ const ProfileForm = () => {
   const [currentLogin, onChangeLogin, setLogin] = useInput('');
   const [currentPassword, onChangePassword] = useInput('******');
 
-  const { isLoading, hasError, errorMessage, user } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage, user } = useSelector((state: any) => state.authReducer as TAuth); //Доделать типизацию для redux
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(patchUserData({ name: currentName, email: currentLogin, password: currentPassword}));
+    dispatch(patchUserData({ name: currentName, email: currentLogin, password: currentPassword}) as any); //Доделать типизацию для redux
   }
 
   const handleCancel = () => {
@@ -33,7 +33,7 @@ const ProfileForm = () => {
   return(
     <form className={`${styles.profileFormContainer} ml-15`} onSubmit={handleSubmit}>
     {isLoading && <p>Отправка запроса ...</p>}
-    {hasError && <p>{errorMessage}. Что-то пошло не так...</p>}
+    {hasError.login && <p>{errorMessage}. Что-то пошло не так...</p>}
     <Input type={'text'}
       placeholder={'Имя'}
       icon="EditIcon"
@@ -42,9 +42,8 @@ const ProfileForm = () => {
       extraClass="mt-6"
       onChange={onChangeName}
     />
-    <EmailInput type={'text'}
+    <EmailInput 
       placeholder={'E-mail'}
-      icon="EditIcon"
       value={currentLogin}
       size={'default'}
       extraClass="mt-6"

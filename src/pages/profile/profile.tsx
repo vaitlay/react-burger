@@ -6,20 +6,20 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { getUserData, logout } from '../../services/actions/auth.js';
 import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_ROOT } from '../../utils/route-endpoints.js';
-
+import { TAuth } from '../../types';
 
 const ProfilePage = () => {
 
   const dispatch = useDispatch();
 
-  const { authChecked } = useSelector(state => state.authReducer);
+  const { authChecked } = useSelector((state:any) => state.authReducer as TAuth); //Доделать типизацию для redux
   
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(logout() as any); //Доделать типизацию для redux
   }
 
   useEffect(() => {
-    if (!authChecked) dispatch(getUserData());
+    if (!authChecked) dispatch(getUserData() as any); //Доделать типизацию для redux
   }, [])
 
   return (

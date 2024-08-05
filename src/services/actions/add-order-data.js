@@ -1,5 +1,5 @@
-import { addCurrentOrderRequest } from '../../utils/api.js'
-import { CLEAR_INGREDIENTS } from './constructor-list.js'
+import { addCurrentOrderRequest } from '../../utils/api'
+import { CLEAR_INGREDIENTS } from './constructor-list'
 
 export const ADD_ORDER_SUCCESS = 'ADD_ORDER_SUCCESS';
 export const ADD_ORDER_REQUEST = 'ADD_ORDER_REQUEST';

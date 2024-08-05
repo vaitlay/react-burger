@@ -1,18 +1,26 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import propTypes from 'prop-types';
+
+import { TAuth } from '../../types';
 import { getUserData } from '../../services/actions/auth';
 import { ROUTE_LOGIN } from '../../utils/route-endpoints';
+import { JsxElement } from 'typescript';
 
-const ProtectedRouteElement = ({ onlyAuth, element }) => {
-  const { loggedIn, authChecked} = useSelector(state => state.authReducer);
+
+type TProtectedRoute = {
+  onlyAuth: boolean;
+  element: JSX.Element;
+}
+
+const ProtectedRouteElement = ({ onlyAuth, element }: TProtectedRoute): JSX.Element => {
+  const { loggedIn, authChecked } = useSelector((state: any) => state.authReducer as TAuth); //Доделать типизацию redux
   const dispatch = useDispatch();
   const location = useLocation();
 
     
   useEffect(() => {
-    if (!authChecked) dispatch(getUserData());
+    if (!authChecked) dispatch(getUserData() as any); //Доделать типизацию redux
   }, []);
   
 
@@ -25,9 +33,5 @@ const ProtectedRouteElement = ({ onlyAuth, element }) => {
   return  element;
 }
 
-ProtectedRouteElement.propTypes = {
-  onlyAuth: propTypes.bool.isRequired,
-  element: propTypes.element.isRequired
-}
 
 export default ProtectedRouteElement;

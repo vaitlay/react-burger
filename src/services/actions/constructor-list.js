@@ -1,4 +1,4 @@
-import { generateUniqueId } from '../../utils/generate-id.js'
+import { generateUniqueId } from '../../utils/generate-id'
 
 export const ADD_INGREDIENT = 'ADD_INGREDIENT';
 export const ADD_BUNS = 'ADD_BUNS';
