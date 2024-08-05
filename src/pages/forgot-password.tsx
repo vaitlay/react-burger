@@ -19,7 +19,7 @@ const ForgotPasswordPage = (): JSX.Element => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    dispatch(forgotPassword({ email: currentEmail }) as any); //Доделать!
+    dispatch(forgotPassword({ email: currentEmail }) as any); //Доделать типизацию для redux
     navigate(ROUTE_RESET_PASSWORD, {state : {from : location}});
   }
   

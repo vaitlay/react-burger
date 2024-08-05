@@ -13,7 +13,7 @@ const LoginPage = (): JSX.Element => {
   const dispatch = useDispatch();
   const [ currentEmail, onChangeEmail ] = useInput();
   const [ currentPassword, onChangePassword ] = useInput();
-  const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth);
+  const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth); // доделать типизацию для redux
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
