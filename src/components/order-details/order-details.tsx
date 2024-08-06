@@ -3,9 +3,9 @@ import doneImg from '../../images/done.png';
 import { useSelector } from 'react-redux'
 
 
-const OrderDetails = () => {
+const OrderDetails = (): JSX.Element => {
 
-  const { orderId, isLoading, hasError, errorMessage } = useSelector(state => state.addOrderReducer);
+  const { orderId, isLoading, hasError, errorMessage } = useSelector((state: any) => state.addOrderReducer); //Позже доделать типизацию для redux 
 
   if (isLoading) return <p>Формирование заказа</p>
   else if (hasError) return <p>{`Ошибка - ${errorMessage}`}</p>

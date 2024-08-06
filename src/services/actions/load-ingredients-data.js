@@ -1,4 +1,4 @@
-import { loadIngredientsDataRequest } from '../../utils/api.js'
+import { loadIngredientsDataRequest } from '../../utils/api'
 
 export const LOAD_INGREDIENTS_DATA_SUCCESS = 'LOAD_INGREDIENTS_DATA_SUCCESS';
 export const LOAD_INGREDIENTS_DATA_REQUEST = 'LOAD_INGREDIENTS_DATA_REQUEST';

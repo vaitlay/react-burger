@@ -1,5 +1,5 @@
 import styles from './page.module.css';
-import IngredientDetails from '../components/ingredient-details/ingredient-details.jsx';
+import IngredientDetails from '../components/ingredient-details/ingredient-details';
 
 const IngredientPage = () => {
   return (

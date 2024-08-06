@@ -3,22 +3,23 @@ import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer
 
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { useInput } from '../hooks/useInput.js';
+import { useInput } from '../hooks/useInput';
 import { ROUTE_FORGOT_PASSWORD, ROUTE_REGISTER } from '../utils/route-endpoints.js';
 import { login } from '../services/actions/auth.js';
+import { TAuth } from '../types'
 
-const LoginPage = () => {
+const LoginPage = (): JSX.Element => {
 
   const dispatch = useDispatch();
   const [ currentEmail, onChangeEmail ] = useInput();
   const [ currentPassword, onChangePassword ] = useInput();
-  const { isLoading, hasError, errorMessage } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth); // доделать типизацию для redux
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login({ email: currentEmail, password: currentPassword }));
+    dispatch(login({ email: currentEmail, password: currentPassword }) as any); // доделать типизацию для redux
   }
-
+  
 
   return (
     <form className = {styles.formContainer} onSubmit = {handleSubmit}>

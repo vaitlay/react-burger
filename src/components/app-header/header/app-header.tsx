@@ -1,9 +1,10 @@
 import headerStyles from './app-header.module.css';
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { FC } from 'react'
 import { NavLink } from 'react-router-dom';
 import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_ROOT } from '../../../utils/route-endpoints.js'
 
-const AppHeader = () => {
+const AppHeader: FC = () => {
   return (
     <header className = {headerStyles.header}>
       <div className = {headerStyles.leftNav}>

@@ -5,20 +5,21 @@ import { Link, useNavigate, useLocation  } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { forgotPassword } from '../services/actions/auth.js';
 import { ROUTE_LOGIN, ROUTE_RESET_PASSWORD } from '../utils/route-endpoints.js';
-import { useInput } from '../hooks/useInput.js';
+import { useInput } from '../hooks/useInput';
+import { TAuth } from '../types';
 
-const ForgotPasswordPage = () => {
+const ForgotPasswordPage = (): JSX.Element => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isLoading, hasError, errorMessage } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth);
   const [currentEmail, onChangeEmail] = useInput('example@email.com'); 
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(forgotPassword({ email: currentEmail }));
+    dispatch(forgotPassword({ email: currentEmail }) as any); //Доделать типизацию для redux
     navigate(ROUTE_RESET_PASSWORD, {state : {from : location}});
   }
   

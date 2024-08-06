@@ -6,7 +6,7 @@ import {
   logoutRequest,
   getUserDataRequest,
   patchUserDataRequest
-} from '../../utils/api.js'
+} from '../../utils/api'
 
 export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
 export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST';

@@ -3,21 +3,21 @@ import mainStyle from './app.module.css'
 import { Routes, Route } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-import ProtectedRouteElement from '../protected-route-element/protected-route-element.jsx'
-import AppHeader from '../app-header/header/app-header.jsx'
-import IngredientDetails from '../ingredient-details/ingredient-details.jsx'
-import Modal from '../modal/modal.jsx';
+import ProtectedRouteElement from '../protected-route-element/protected-route-element'
+import AppHeader from '../app-header/header/app-header'
+import IngredientDetails from '../ingredient-details/ingredient-details'
+import Modal from '../modal/modal';
 
-import MainPage from '../../pages/main.jsx'
-import LoginPage from '../../pages/login.jsx'
-import RegisterPage from '../../pages/register.jsx'
-import ForgotPasswordPage from '../../pages/forgot-password.jsx'
-import ResetPasswordPage from '../../pages/reset-password.jsx'
-import ProfilePage from '../../pages/profile/profile.jsx'
-import ProfileForm from '../../pages/profile/profile-form.jsx'
-import Orders from '../../pages/profile/orders.jsx'
-import IngredientPage from '../../pages/ingredient.jsx'
-import NotFound404 from '../../pages/not-found.jsx'
+import MainPage from '../../pages/main'
+import LoginPage from '../../pages/login'
+import RegisterPage from '../../pages/register'
+import ForgotPasswordPage from '../../pages/forgot-password'
+import ResetPasswordPage from '../../pages/reset-password'
+import ProfilePage from '../../pages/profile/profile'
+import ProfileForm from '../../pages/profile/profile-form'
+import Orders from '../../pages/profile/orders'
+import IngredientPage from '../../pages/ingredient'
+import NotFound404 from '../../pages/not-found'
 
 import { 
   ROUTE_LOGIN, 
