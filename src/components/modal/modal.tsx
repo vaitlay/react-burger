@@ -1,6 +1,6 @@
 import ReactDOM from 'react-dom';
 import { useEffect, ReactPortal } from 'react';
-import PropTypes from 'prop-types'
+
 import modalStyles from './modal.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay'
@@ -42,14 +42,5 @@ const Modal = ({ header, children, onClose }: TModalProps): ReactPortal => {
     ), document.getElementById('modals') as HTMLElement);
 
 }
-
-Modal.propTypes = {
-    header: PropTypes.string,
-    children: PropTypes.element,
-    //children: PropTypes.arrayOf(PropTypes.element),
-    onClose: PropTypes.func.isRequired
-}
-
-
 
 export default Modal

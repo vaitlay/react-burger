@@ -5,8 +5,6 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { TAuth } from '../../types';
 import { getUserData } from '../../services/actions/auth';
 import { ROUTE_LOGIN } from '../../utils/route-endpoints';
-import { JsxElement } from 'typescript';
-
 
 type TProtectedRoute = {
   onlyAuth: boolean;

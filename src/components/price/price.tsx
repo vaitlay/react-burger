@@ -1,4 +1,3 @@
-//import PropTypes from 'prop-types';
 import { FC } from 'react'
 import priceStyles from './price.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -16,12 +15,4 @@ const Price: FC<Tpops> = ({ size, value, iconType }): JSX.Element => {
 
 export default Price;
 
-// Price.propTypes = {
-//   size: PropTypes.string,
-//   iconType: PropTypes.string,
-//   value : PropTypes.oneOfType([
-//     PropTypes.string,
-//     PropTypes.number
-//   ]).isRequired
-// }
 

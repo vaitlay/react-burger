@@ -15,7 +15,7 @@ const ProfileForm = () => {
 
   const { isLoading, hasError, errorMessage, user } = useSelector((state: any) => state.authReducer as TAuth); //Доделать типизацию для redux
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
     dispatch(patchUserData({ name: currentName, email: currentLogin, password: currentPassword}) as any); //Доделать типизацию для redux
   }

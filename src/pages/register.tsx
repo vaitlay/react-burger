@@ -18,7 +18,7 @@ const RegisterPage = () => {
 
   const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth); // доделать типизацию для redux
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(register({
       email: currentEmail,

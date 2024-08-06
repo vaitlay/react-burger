@@ -24,7 +24,7 @@ const ResetPasswordPage = () => {
     if (!location.state) navigate(ROUTE_LOGIN);
   },[])
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(resetPassword({
       newPassword: currentPassword,

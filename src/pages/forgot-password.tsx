@@ -17,7 +17,7 @@ const ForgotPasswordPage = (): JSX.Element => {
   const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth);
   const [currentEmail, onChangeEmail] = useInput('example@email.com'); 
 
-  const handleSubmit = (e: React.SyntheticEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(forgotPassword({ email: currentEmail }) as any); //Доделать типизацию для redux
     navigate(ROUTE_RESET_PASSWORD, {state : {from : location}});

@@ -1,9 +1,7 @@
 import listStyle from './burger-ingredient-list.module.css';
-//import PropTypes from 'prop-types'
-import { ingredientType } from '../../../utils/types.js'
 import { TIngredientItem, TConstructorItem } from '../../../types'
 
-import { useMemo, forwardRef, FC, RefObject } from 'react'
+import { useMemo, forwardRef } from 'react'
 
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
@@ -66,10 +64,5 @@ const IngredientList = forwardRef<HTMLHeadingElement, TIngredientList>(({ type, 
   )
 });
 
-
-// IngredientList.propTypes = {
-//   type: PropTypes.string,
-//   items: PropTypes.arrayOf(ingredientType).isRequired
-// }
 
 export default IngredientList;

@@ -1,7 +1,6 @@
 import itemStyles from './ingredient-item.module.css';
-import dummyImg from '../../../images/dummy.png';
-//import PropTypes from 'prop-types'
-//import { FC } from 'react'
+import dummyImg from '../../../images/dummy-img.png';
+
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from 'react-dnd';
 import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../../services/actions/constructor-list.js';
@@ -44,13 +43,5 @@ const IngredientItem = ({ ingredient }: { ingredient: TConstructorItem}): JSX.El
     </div>     
   )
 }
-
-// IngredientItem.propTypes = {
-//   bunLocation: PropTypes.string,
-//   name: PropTypes.string,
-//   price: PropTypes.number,
-//   image_mobile: PropTypes.string
-// }
-
 
 export default IngredientItem;
