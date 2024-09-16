@@ -1,6 +1,15 @@
-import { LOAD_INGREDIENTS_DATA_SUCCESS, LOAD_INGREDIENTS_DATA_REQUEST, LOAD_INGREDIENTS_DATA_FAILED} from '../actions/load-ingredients-data.js'
+import { LOAD_INGREDIENTS_DATA_SUCCESS, LOAD_INGREDIENTS_DATA_REQUEST, LOAD_INGREDIENTS_DATA_FAILED, TLoadIngredientsDataActions } from '../actions/load-ingredients-data'
+import { TIngredientItem } from '../../types'
 
-const initialState = {
+type TIngredientDataState = {
+  ingredientsData: Array<TIngredientItem>,
+  isLoading: Boolean,
+  hasError: Boolean,
+  errorMessage: string
+}
+
+
+const initialState: TIngredientDataState = {
   ingredientsData: [],
   isLoading: false,
   hasError: false,
@@ -8,7 +17,7 @@ const initialState = {
 };
 
 
-const loadIngredientsReducer = (state = initialState, action) => {
+const loadIngredientsReducer = (state = initialState, action: TLoadIngredientsDataActions): TIngredientDataState => {
   switch(action.type) {
     case LOAD_INGREDIENTS_DATA_REQUEST: {
       return {

@@ -3,11 +3,11 @@ import { PasswordInput, EmailInput, Input, Button } from '@ya.praktikum/react-de
 
 import { useInput } from '../hooks/useInput';
 import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
+import { useSelector } from '../hooks/useSelector';
+import { useDispatch } from '../hooks/useDispatch';
 import { register } from '../services/actions/auth';
 import { ROUTE_LOGIN } from '../utils/route-endpoints';
-import { TAuth } from '../types';
 
 const RegisterPage = () => {
 
@@ -16,7 +16,7 @@ const RegisterPage = () => {
   const [currentEmail, onChangeEmail] = useInput();
   const [currentPassword, onChangePassword] = useInput();
 
-  const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth); // доделать типизацию для redux
+  const { isLoading, hasError, errorMessage } = useSelector((state) => state.authReducer); 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

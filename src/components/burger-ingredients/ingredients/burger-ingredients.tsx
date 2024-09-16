@@ -1,9 +1,8 @@
 import burgerStyles from './burger-ingredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import { TIngredientItem } from '../../../types'
 
 import { useRef, useState, RefObject, UIEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../hooks/useSelector';
 
 import IngredientList from '../list/burger-ingredient-list';
 
@@ -12,7 +11,7 @@ type TTabsRecord = { [tab in TTabs]: RefObject<HTMLHeadingElement> };
 
 const BurgerIngredients = (): JSX.Element =>
 {
-  const { ingredientsData } = useSelector((state: any) => state.loadIngredientsReducer as {ingredientsData: TIngredientItem[]});
+  const { ingredientsData } = useSelector((state) => state.loadIngredientsReducer);
 
   const buns = ingredientsData.filter(component => component.type === 'bun');
   const sauces = ingredientsData.filter(component => component.type === 'sauce');

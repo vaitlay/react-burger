@@ -2,7 +2,7 @@ import headerStyles from './app-header.module.css';
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC } from 'react'
 import { NavLink } from 'react-router-dom';
-import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_ROOT } from '../../../utils/route-endpoints.js'
+import { ROUTE_PROFILE, ROUTE_FEED, ROUTE_ROOT } from '../../../utils/route-endpoints.js'
 
 const AppHeader: FC = () => {
   return (
@@ -13,28 +13,28 @@ const AppHeader: FC = () => {
           className = {`text text_type_main-default ${headerStyles.navItem}`} 
         >{({ isActive }) => (
           <>
-            <p className = {isActive? '' : 'text_color_inactive'}>Конструктор</p>
             <BurgerIcon type= {isActive? 'primary' : 'secondary'}/>
+            <p className = {isActive? 'ml-2' : 'ml-2 text_color_inactive'}>Конструктор</p>
           </>
         )}
         </NavLink>
-        <NavLink to={ROUTE_ORDERS} 
+        <NavLink to={ROUTE_FEED} 
           className = {`text text_type_main-default ml-6 ${headerStyles.navItem}`} 
         >{({ isActive }) => (
           <>
-            <p className = {isActive? '' : 'text_color_inactive'}>Лента заказов</p>
             <ListIcon type= {isActive? 'primary' : 'secondary'} />
+            <p className = {isActive? 'ml-2' : 'ml-2 text_color_inactive'}>Лента заказов</p>
           </>
         )}
         </NavLink>
       </div>
       <Logo />
-      <NavLink  to={ROUTE_PROFILE} end
+      <NavLink  to={ROUTE_PROFILE} 
         className = {`text text_type_main-default ${headerStyles.navItem}`} 
       >{({ isActive }) => (
         <>
-          <p className = {isActive? '' : 'text_color_inactive'}>Личный кабинет</p>
           <ProfileIcon type= {isActive? 'primary' : 'secondary'}/>
+          <p className = {isActive? 'ml-2' : 'ml-2 text_color_inactive'}>Личный кабинет</p>
         </>
       )}
       </NavLink>

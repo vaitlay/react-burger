@@ -1,3 +1,5 @@
+import { API_ENTRY_POINT } from './api'
+
 type TServerResponse<T> = {
   success: Boolean;
 } & T;
@@ -16,7 +18,7 @@ const checkSuccess = <T>(res: TServerResponse<T>) => {
 }
 
 
-export const request = <T>(endpoint: string, options?: any, baseUrl = 'https://norma.nomoreparties.space/api/') => {
+export const request = <T>(endpoint: string, options?: any, baseUrl = API_ENTRY_POINT) => {
   return fetch(`${baseUrl}${endpoint}`, options)
     .then(checkResponse<TServerResponse<T>>)
     .then(checkSuccess<T>);

@@ -1,6 +1,8 @@
 import { request } from './request'
-import { TIngredientItem } from '../types';
+import { TIngredientItem, TUser, TOrder } from '../types';
 
+export const API_ENTRY_POINT = 'https://norma.nomoreparties.space/api/';
+export const WS_ENTRY_POINT = 'wss://norma.nomoreparties.space/';
 
 export const API_FORGOT_PASSWORD = 'password-reset'
 export const API_RESET_PASSWORD = 'password-reset/reset'
@@ -12,6 +14,9 @@ export const API_USER_DATA = 'auth/user'
 
 export const API_LOAD_INGREDIENTS = 'ingredients'
 export const API_ADD_ORDER = 'orders'
+export const API_GET_ORDER = 'orders'
+export const API_GET_ALL_ORDERS = 'orders/all'
+
 
 
 type TIngredientResponse = { data: Array<TIngredientItem> };
@@ -20,10 +25,6 @@ type TRefreshToken = {
   refreshToken: string;
 }
 type TMessage = { message: string }
-type TUser = {
-  email: string;
-  name: string;
-}
 type TAuthSuccess = TUser & TRefreshToken
 
 export const loadIngredientsDataRequest = () => {
@@ -32,12 +33,22 @@ export const loadIngredientsDataRequest = () => {
 
 
 export const addCurrentOrderRequest = (orderData: Array<string>) => {
-  return request<void>(API_ADD_ORDER, {
+  const accessToken = localStorage.getItem("accessToken");
+  return request<{ name: string, order: {number: number} }>(API_ADD_ORDER, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json'},
+    headers: {
+      'Content-Type': 'application/json', 
+      'Authorization': 'Bearer ' + accessToken
+    },
     body: JSON.stringify({ingredients: orderData})
   });
 }
+
+
+export const getCurrentOrderRequest = (orderNumber: number) => {
+  return request<{orders: Array<TOrder>}>(`${API_GET_ORDER}/${orderNumber}`);
+}
+
 
 export const forgotPasswordRequest = ({ email }: { email: string }) => {
   return request<TMessage>(API_FORGOT_PASSWORD, {
@@ -120,7 +131,7 @@ export const getUserDataRequest = () => {
     })
 }   
 
-export const patchUserDataRequest = (user: { name: string, email: string, password: string}) => {
+export const patchUserDataRequest = (user: TUser) => {
     const accessToken = localStorage.getItem('accessToken');
     return request<TUser>(API_USER_DATA, {
       method: 'PATCH',
@@ -134,7 +145,7 @@ export const patchUserDataRequest = (user: { name: string, email: string, passwo
 
 
 
-const checkTokenExpire = () => {
+export const checkTokenExpire = () => {
   const refreshToken = localStorage.getItem('refreshToken');
   return request<TRefreshToken>(API_UPDATE_TOKEN, {
     method: "POST",
@@ -150,3 +161,4 @@ const checkTokenExpire = () => {
       return null
     })
 }
+

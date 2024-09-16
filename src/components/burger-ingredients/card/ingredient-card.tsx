@@ -4,7 +4,7 @@ import { TIngredientItem } from '../../../types'
 
 
 import { useModal } from '../../../hooks/useModal'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../../hooks/useDispatch';
 import { useDrag } from 'react-dnd';
 import { SET_CURRENT_INGREDIENT }  from '../../../services/actions/ingredient-modal';
 

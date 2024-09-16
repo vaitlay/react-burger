@@ -1,10 +1,10 @@
 import styles from '../page.module.css';
 import { Input, PasswordInput, EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useInput } from '../../hooks/useInput';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from '../../hooks/useSelector';
+import { useDispatch } from '../../hooks/useDispatch';
 import { useEffect } from 'react'
-import { patchUserData } from '../../services/actions/auth.js';
-import { TAuth } from '../../types';
+import { patchUserData } from '../../services/actions/auth';
 
 const ProfileForm = () => {
 
@@ -13,21 +13,21 @@ const ProfileForm = () => {
   const [currentLogin, onChangeLogin, setLogin] = useInput('');
   const [currentPassword, onChangePassword] = useInput('******');
 
-  const { isLoading, hasError, errorMessage, user } = useSelector((state: any) => state.authReducer as TAuth); //Доделать типизацию для redux
+  const { isLoading, hasError, errorMessage, user } = useSelector((state) => state.authReducer);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => { 
     e.preventDefault();
-    dispatch(patchUserData({ name: currentName, email: currentLogin, password: currentPassword}) as any); //Доделать типизацию для redux
+    dispatch(patchUserData({ name: currentName, email: currentLogin, password: currentPassword})); //Доделать типизацию для redux
   }
 
   const handleCancel = () => {
-    setName(user.name);
-    setLogin(user.email);
+      setName(user.name);
+      setLogin(user.email);
   }
 
   useEffect(() => {
-    setName(user.name);
-    setLogin(user.email);
+      setName(user.name);
+      setLogin(user.email);
   }, [user])
 
   return(

@@ -1,9 +1,9 @@
 import listStyle from './burger-ingredient-list.module.css';
-import { TIngredientItem, TConstructorItem } from '../../../types'
+import { TIngredientItem } from '../../../types'
 
 import { useMemo, forwardRef } from 'react'
 
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../../hooks/useSelector';
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router'
 
@@ -31,8 +31,7 @@ const IngredientList = forwardRef<HTMLHeadingElement, TIngredientList>(({ type, 
     'sauce' : 'Соусы',
     'main' : 'Начинка'
   }
-  const { buns, ingredients } = useSelector((state: any) => state.constructorListReducer as {  //Позже доделать типизацию для redux
-    buns: Array<TConstructorItem>, ingredients: Array<TConstructorItem> });
+  const { buns, ingredients } = useSelector((state) => state.constructorListReducer);
 
 
   const countItems = useMemo(() => {

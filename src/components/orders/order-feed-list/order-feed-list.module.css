@@ -1,0 +1,10 @@
+
+.section {
+    display: flex;
+    width: 600px;
+    flex-direction: column;
+    max-height: 80vh;
+}
+.sectionScroll {
+    overflow-y: scroll;
+}
