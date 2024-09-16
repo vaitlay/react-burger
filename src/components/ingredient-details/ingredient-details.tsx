@@ -1,24 +1,26 @@
 import ingredientDetailsStyles from './ingredient-details.module.css';
+import { TIngredientItem } from '../../types'
+
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { Link } from 'react-router-dom'
 import { useEffect } from 'react';
-import { loadIngredientsData } from '../../services/actions/load-ingredients-data.js';
-import { API_LOAD_INGREDIENTS } from '../../utils/api.js';
-import NotFound404 from '../../pages/not-found.jsx'
+import { loadIngredientsData } from '../../services/actions/load-ingredients-data';
+import NotFound404 from '../../pages/not-found'
 
-const IngredientDetails = () => {
+const IngredientDetails = (): JSX.Element => {
   
   const dispatch = useDispatch();
   const { _id } = useParams();
-  const currentItem = useSelector(state => state.ingredientModalReducer.currentIngredient);
+  const currentItem = useSelector((state: any) => state.ingredientModalReducer.currentIngredient as TIngredientItem); //Позже доделать типизацию для redux 
+  const ingredientsData = useSelector((state: any) => state.loadIngredientsReducer.ingredientsData as TIngredientItem[]); //Позже доделать типизацию для redux 
+  const itemFromRoute = ingredientsData.find(ingr => ingr._id === _id);
+
 
   useEffect(() => {
-    if (!currentItem._id) dispatch(loadIngredientsData(API_LOAD_INGREDIENTS))
+    if (!currentItem._id) dispatch(loadIngredientsData() as any) //Позже доделать типизацию для redux 
   },[]);
 
-  const { ingredientsData } = useSelector(state => state.loadIngredientsReducer);
-  const itemFromRoute = ingredientsData.find(ingr => ingr._id === _id);
+
 
   const item = currentItem._id ? currentItem : itemFromRoute;
   if (!item) return <NotFound404/>

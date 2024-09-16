@@ -1,4 +1,6 @@
-import { request } from './request.js'
+import { request } from './request'
+import { TIngredientItem } from '../types';
+
 
 export const API_FORGOT_PASSWORD = 'password-reset'
 export const API_RESET_PASSWORD = 'password-reset/reset'
@@ -11,21 +13,34 @@ export const API_USER_DATA = 'auth/user'
 export const API_LOAD_INGREDIENTS = 'ingredients'
 export const API_ADD_ORDER = 'orders'
 
+
+type TIngredientResponse = { data: Array<TIngredientItem> };
+type TRefreshToken = { 
+  accessToken: string;
+  refreshToken: string;
+}
+type TMessage = { message: string }
+type TUser = {
+  email: string;
+  name: string;
+}
+type TAuthSuccess = TUser & TRefreshToken
+
 export const loadIngredientsDataRequest = () => {
-  return request(API_LOAD_INGREDIENTS);
+  return request<TIngredientResponse>(API_LOAD_INGREDIENTS);
 }
 
 
-export const addCurrentOrderRequest = (orderData) => {
-  return request(API_ADD_ORDER, {
+export const addCurrentOrderRequest = (orderData: Array<string>) => {
+  return request<void>(API_ADD_ORDER, {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({ingredients: orderData})
   });
 }
 
-export const forgotPasswordRequest = ({ email }) => {
-  return request(API_FORGOT_PASSWORD, {
+export const forgotPasswordRequest = ({ email }: { email: string }) => {
+  return request<TMessage>(API_FORGOT_PASSWORD, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -34,8 +49,8 @@ export const forgotPasswordRequest = ({ email }) => {
   });
 }
 
-export const resetPasswordRequest = ({ newPassword, token }) => {
-  return request(API_RESET_PASSWORD, {
+export const resetPasswordRequest = ({ newPassword, token }: { newPassword: string, token: string }) => {
+  return request<TMessage>(API_RESET_PASSWORD, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -44,8 +59,8 @@ export const resetPasswordRequest = ({ newPassword, token }) => {
   });   
 }
   
-export const loginRequest = ({ email, password }) => {
-  return request(API_LOGIN, {
+export const loginRequest = ({ email, password }: { email: string, password: string }) => {
+  return request<TAuthSuccess>(API_LOGIN, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -54,8 +69,8 @@ export const loginRequest = ({ email, password }) => {
   });
 }
 
-export const registerRequest = ({ email, password, name }) => {
-  return request(API_REGISTER, {
+export const registerRequest = ({ email, password, name }: { email: string, password: string, name: string }) => {
+  return request<TAuthSuccess>(API_REGISTER, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -66,7 +81,7 @@ export const registerRequest = ({ email, password, name }) => {
 
 export const logoutRequest = () => {
   const refreshToken = localStorage.getItem("refreshToken");
-  return request(API_LOGOUT, {
+  return request<TMessage>(API_LOGOUT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -80,7 +95,7 @@ export const logoutRequest = () => {
 export const getUserDataRequest = () => {
   const accessToken = localStorage.getItem('accessToken');
   if (!accessToken) return Promise.reject('no Token');
-  return request(API_USER_DATA, {
+  return request<TUser>(API_USER_DATA, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -105,9 +120,9 @@ export const getUserDataRequest = () => {
     })
 }   
 
-export const patchUserDataRequest = (user) => {
+export const patchUserDataRequest = (user: { name: string, email: string, password: string}) => {
     const accessToken = localStorage.getItem('accessToken');
-    return request(API_USER_DATA, {
+    return request<TUser>(API_USER_DATA, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -121,7 +136,7 @@ export const patchUserDataRequest = (user) => {
 
 const checkTokenExpire = () => {
   const refreshToken = localStorage.getItem('refreshToken');
-  return request(API_UPDATE_TOKEN, {
+  return request<TRefreshToken>(API_UPDATE_TOKEN, {
     method: "POST",
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ token: refreshToken })

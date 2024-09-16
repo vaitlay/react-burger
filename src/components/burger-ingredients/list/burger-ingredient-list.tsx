@@ -1,26 +1,42 @@
 import listStyle from './burger-ingredient-list.module.css';
-import PropTypes from 'prop-types'
+import { TIngredientItem, TConstructorItem } from '../../../types'
 
 import { useMemo, forwardRef } from 'react'
+
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom'
 import { useLocation } from 'react-router'
-import { ingredientType } from '../../../utils/types.js'
 
-import IngredientCard from '../card/ingredient-card.jsx';
+import IngredientCard from '../card/ingredient-card';
 
-const IngredientList = forwardRef(({ type, items }, tabHeaderRef) => {
+type TIngredientList = {
+  type: string;
+  items: Array<TIngredientItem>
+}
+
+type TItemsCounter = {
+  [name: string]: number; 
+}
+
+type TListName = {
+  [name: string]: string;
+}
+
+const IngredientList = forwardRef<HTMLHeadingElement, TIngredientList>(({ type, items }, tabHeaderRef): JSX.Element => {
 
   const location = useLocation();
 
-  const listName = {
+  const listName: TListName = {
     'bun' : 'Булки',
     'sauce' : 'Соусы',
     'main' : 'Начинка'
   }
-  const { buns, ingredients } = useSelector(state => state.constructorListReducer);
+  const { buns, ingredients } = useSelector((state: any) => state.constructorListReducer as {  //Позже доделать типизацию для redux
+    buns: Array<TConstructorItem>, ingredients: Array<TConstructorItem> });
+
+
   const countItems = useMemo(() => {
-    const itemsCounter = {};
+    const itemsCounter: TItemsCounter = {};
     for (let ingr of ingredients) itemsCounter[ingr._id] ? itemsCounter[ingr._id]++ : itemsCounter[ingr._id] = 1;
     for (let bun of buns) itemsCounter[bun._id] ? itemsCounter[bun._id]++ : itemsCounter[bun._id] = 1;
     return itemsCounter;
@@ -48,10 +64,5 @@ const IngredientList = forwardRef(({ type, items }, tabHeaderRef) => {
   )
 });
 
-
-IngredientList.propTypes = {
-  type: PropTypes.string,
-  items: PropTypes.arrayOf(ingredientType).isRequired
-}
 
 export default IngredientList;

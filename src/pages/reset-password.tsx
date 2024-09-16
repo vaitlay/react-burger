@@ -2,13 +2,13 @@ import styles from './page.module.css';
 import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useEffect } from 'react';
-import { useInput } from '../hooks/useInput.js';
+import { useInput } from '../hooks/useInput';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { resetPassword } from '../services/actions/auth.js';
 import { ROUTE_LOGIN } from '../utils/route-endpoints.js';
-
+import { TAuth} from '../types';
 
 const ResetPasswordPage = () => {
 
@@ -16,7 +16,7 @@ const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isLoading, hasError, errorMessage, resetPasswordSuccess } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage, resetPasswordSuccess } = useSelector((state: any) => state.authReducer as TAuth); //Доделать типизацию для redux
   const [currentPassword, onChangePassword] = useInput();
   const [currentToken, onChangeToken] = useInput();
 
@@ -24,12 +24,12 @@ const ResetPasswordPage = () => {
     if (!location.state) navigate(ROUTE_LOGIN);
   },[])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(resetPassword({
       newPassword: currentPassword,
       token: currentToken
-    }));
+    }) as any); //Доделать типизацию для redux
   }
 
   useEffect(() => {

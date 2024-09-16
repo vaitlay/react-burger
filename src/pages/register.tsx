@@ -1,13 +1,13 @@
 import styles from './page.module.css';
 import { PasswordInput, EmailInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useInput } from '../hooks/useInput.js';
+import { useInput } from '../hooks/useInput';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { register } from '../services/actions/auth.js';
-import { ROUTE_LOGIN } from '../utils/route-endpoints.js';
-
+import { register } from '../services/actions/auth';
+import { ROUTE_LOGIN } from '../utils/route-endpoints';
+import { TAuth } from '../types';
 
 const RegisterPage = () => {
 
@@ -16,15 +16,15 @@ const RegisterPage = () => {
   const [currentEmail, onChangeEmail] = useInput();
   const [currentPassword, onChangePassword] = useInput();
 
-  const { isLoading, hasError, errorMessage } = useSelector(state => state.authReducer);
+  const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth); // доделать типизацию для redux
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(register({
       email: currentEmail,
       password: currentPassword,
       name: currentName
-    }));
+    }) as any ); // доделать типизацию для redux
     if (!hasError) alert('Пользователь зарегистрирован');
   }
   if (isLoading) return <p>Отправка запроса на сервер</p>
