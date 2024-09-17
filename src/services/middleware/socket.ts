@@ -11,16 +11,18 @@ import type {
 export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
   return ((store: MiddlewareAPI<AppDispatch, RootState>) => {
     let socket: WebSocket | null = null;
+    let isSocketOpen: boolean;
     const accessToken = localStorage.getItem('accessToken');
+
     return next => (action: TApplicationActions) => {
       const { dispatch } = store;
       const { type } = action;
       const { wsInit, onOpen, onClose, onError, onMessage } = wsActions;
 
       if (type === wsInit) {
-        console.log('creating new Socket')
         const token = action.payload.sendToken ? `?token=${accessToken}` : '';
         socket = new WebSocket(`${WS_ENTRY_POINT}${action.payload.url}${token}`);
+        isSocketOpen = true;
       }
 
       if (socket) {
@@ -28,9 +30,16 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
           dispatch({ type: onOpen });
         };
 
+        if (type === onClose) {
+          if (socket.readyState) socket.close(); 
+          isSocketOpen = false;
+        }
+
         socket.onerror = event => {
-          dispatch({ type: onError, payload: event });
+          dispatch({ type: onError, payload: String(event) });
+          if (isSocketOpen) dispatch({ type: wsInit, payload: true });
         };
+
 
         socket.onmessage = event => {
           const { data } = event;
@@ -46,7 +55,9 @@ export const socketMiddleware = (wsActions: TWSStoreActions): Middleware => {
         };
 
         socket.onclose = event => {
-          dispatch({ type: onClose, payload: event });
+          dispatch({ type: onClose, payload: String(event) });
+          socket?.close();
+          if (isSocketOpen) dispatch({ type: wsInit, payload: true });
         };
       }
 

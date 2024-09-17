@@ -1,5 +1,5 @@
 import styles from './page.module.css';
-import React from 'react'
+import { useEffect, useMemo } from 'react'
 
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from '../hooks/useSelector';
@@ -17,26 +17,31 @@ const FeedPage = (): JSX.Element => {
 
   const feedData = useSelector((state) => state.wsAllOrdersReducer); 
 
-  const orders = feedData.messages.orders;
-  const readyOrders = orders
-    .filter(order => order.status === 'done')
-    .map(order => {return order.number});
-  const inWorkOrders = orders
-    .filter(order => order.status === 'pending')
-    .map(order => {return order.number});  
+  const orders = useMemo(() => {
+    return feedData.messages.orders
+  },[feedData.messages]);
 
-  React.useEffect(() => {
-    console.log("Loading all order data from server")
+  const readyOrders = useMemo(() => {
+    return orders
+      .filter(order => order.status === 'done')
+      .map(order => {return order.number})
+  },[orders]);
+  const inWorkOrders = useMemo(() => {
+    return orders
+      .filter(order => order.status === 'pending')
+      .map(order => {return order.number})
+  },[orders]);
+
+  useEffect(() => {
     dispatch({type: ALL_ORDERS_WS_CONNECTION_START, payload: {url: API_GET_ALL_ORDERS, sendToken: false}});     
     return () => {
-        dispatch({ type: ALL_ORDERS_WS_CONNECTION_CLOSED });
+      dispatch({ type: ALL_ORDERS_WS_CONNECTION_CLOSED });
     }
   },[]);
 
 
   if (!feedData.wsConnected) return <p>Создание WebSocket соединения с сервером</p>
-  else if (feedData.error) return <p>{`Ошибка установления WebSocket соединения ${feedData.error}`}</p>
-  else {
+  if (feedData.error) return <p>{`Ошибка установления WebSocket соединения ${feedData.error}`}</p>
     return (
       <div>
         <p className = 'text_type_main-large'>Лента заказов</p>
@@ -87,7 +92,6 @@ const FeedPage = (): JSX.Element => {
         </div>
       </div>
     )
-  }
   
 }
 
