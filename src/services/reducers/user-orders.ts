@@ -15,7 +15,7 @@ import type { TOrderList } from '../../types';
     error?: Event;
   }
   
-  const initialState: TWSState = {
+  export const initialState: TWSState = {
     wsConnected: false,
     messages: {
       success: false,
@@ -25,7 +25,7 @@ import type { TOrderList } from '../../types';
     }
   };
   
-const wsUserOrdersReducer = (state = initialState, action: TUserOrdersActions) => {
+export const wsUserOrdersReducer = (state = initialState, action: TUserOrdersActions) => {
     switch (action.type) {
       case USER_ORDERS_WS_CONNECTION_START:
         return {
@@ -65,8 +65,6 @@ const wsUserOrdersReducer = (state = initialState, action: TUserOrdersActions) =
         return state;
     }
   };
-
-export default wsUserOrdersReducer;
 
 
 

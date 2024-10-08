@@ -9,7 +9,7 @@ type TIngredientDataState = {
 }
 
 
-const initialState: TIngredientDataState = {
+export const initialState: TIngredientDataState = {
   ingredientsData: [],
   isLoading: false,
   hasError: false,
@@ -17,7 +17,7 @@ const initialState: TIngredientDataState = {
 };
 
 
-const loadIngredientsReducer = (state = initialState, action: TLoadIngredientsDataActions): TIngredientDataState => {
+export const loadIngredientsReducer = (state = initialState, action: TLoadIngredientsDataActions): TIngredientDataState => {
   switch(action.type) {
     case LOAD_INGREDIENTS_DATA_REQUEST: {
       return {
@@ -48,5 +48,3 @@ const loadIngredientsReducer = (state = initialState, action: TLoadIngredientsDa
     }
   }
 }
-
-export default loadIngredientsReducer;

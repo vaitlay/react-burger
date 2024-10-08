@@ -5,12 +5,12 @@ type TIngredientModal = {
   currentIngredient: TIngredientItem | null
 }
 
-const initialState: TIngredientModal = {
+export const initialState: TIngredientModal = {
   currentIngredient: null
 };
 
 
-const ingredientModalReducer = (state = initialState, action: TIngredientModalActions): TIngredientModal => {
+export const ingredientModalReducer = (state = initialState, action: TIngredientModalActions): TIngredientModal => {
   switch(action.type) {
     case SET_CURRENT_INGREDIENT: {
       return {
@@ -29,5 +29,3 @@ const ingredientModalReducer = (state = initialState, action: TIngredientModalAc
     }
   }
 }
-
-export default ingredientModalReducer;

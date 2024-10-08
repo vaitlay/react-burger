@@ -27,7 +27,7 @@ const IngredientCard = ({ item, count }: { item: TIngredientItem, count: number}
 
   return (
     <li >
-      <div className = {`m-4 ${cardStyles.card}` } onClick = {handleCardOpen} >
+      <div className = {`m-4 ${cardStyles.card}` } onClick = {handleCardOpen} data-test-id = 'ingredientCard'>
         {count ? <Counter count={count} extraClass = {`${cardStyles.counter} m-1`} size='default' /> : null}
         <img className='ml-2 mr-2' src={item.image} alt = {item.name} ref = {draggedIngredientRef} />
         <Price value = {item.price} className = 'm-3' />

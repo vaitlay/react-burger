@@ -4,7 +4,7 @@ import { Routes, Route } from 'react-router-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import ProtectedRouteElement from '../protected-route-element/protected-route-element'
-import AppHeader from '../app-header/header/app-header'
+import AppHeader from '../app-header/app-header'
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import Modal from '../modal/modal';
 
@@ -63,7 +63,7 @@ function App() {
           {backgroundLocation && (
             <Routes>
               <Route path={ROUTE_INGREDIENTS + '/:_id'} element = {
-                <Modal header = 'Детали ингредиента' onClose = {() => navigate('/')}>
+                <Modal header = 'Детали ингредиента' onClose = {() => navigate('/')} >
                   <IngredientDetails />
                 </Modal>   
                 } />

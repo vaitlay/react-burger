@@ -64,10 +64,10 @@ const BurgerConstructor = (): JSX.Element => {
 
   return (
     <section className = {`${listStyles.container} mt-20 ml-5`} >
-      <div ref = {dropBunsRef}>
+      <div ref = {dropBunsRef} data-test-id = 'bunsConstructor'>
       <IngredientItem ingredient = {buns[0]} />
       </div>
-      <div className = {listStyles.betweenBunsSpace} ref = {dropBetweenBunsItemRef}>
+      <div className = {listStyles.betweenBunsSpace} ref = {dropBetweenBunsItemRef} data-test-id = 'betweenBunsConstructor'>
       {ingredients.map((item, index) => {
         return <IngredientItem key = {item.id} ingredient = {item} />
       })}
@@ -82,6 +82,7 @@ const BurgerConstructor = (): JSX.Element => {
           extraClass = 'ml-10 mr-4' 
           onClick = {handleAddOrder} 
           disabled = {buns[0].id === 'defaultTopBunId' ? true : false}
+          data-test-id = 'createOrderBtn'
         >Оформить заказ
         </Button>
       </div>

@@ -7,7 +7,7 @@ type TConstructorListState = {
   ingredients: Array<TConstructorItem>
 }
 
-const initialState: TConstructorListState = {
+export const initialState: TConstructorListState = {
   buns: [
     {bunLocation: 'top', name : 'Выберите булки', price : 0, id: 'defaultTopBunId', _id: ''},
     {bunLocation: 'bottom', name : 'Выберите булки', price : 0, id: 'defaultBottomBunId',  _id: ''}        
@@ -18,7 +18,7 @@ const initialState: TConstructorListState = {
 };
 
 
-const constructorListReducer = (state = initialState, action: TConstructorListActions): TConstructorListState => {
+export const constructorListReducer = (state = initialState, action: TConstructorListActions): TConstructorListState => {
   switch(action.type) {
     case ADD_BUNS: {
       return {
@@ -61,5 +61,3 @@ const constructorListReducer = (state = initialState, action: TConstructorListAc
     }
   }
 }
-
-export default constructorListReducer;

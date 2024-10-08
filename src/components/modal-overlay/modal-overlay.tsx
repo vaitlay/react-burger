@@ -6,7 +6,7 @@ type TModalOverlay = {
 
 const ModalOverlay = ({ onClose }: TModalOverlay): JSX.Element => {
     return (
-        <div className={modalOverlayStyles.overlay}  onClick={onClose}></div>
+        <div className={modalOverlayStyles.overlay}  onClick={onClose} data-test-id = 'modalOverlay'></div>
     );
 }
 

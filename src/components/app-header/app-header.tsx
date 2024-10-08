@@ -2,7 +2,7 @@ import headerStyles from './app-header.module.css';
 import { BurgerIcon, ListIcon, Logo, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { FC } from 'react'
 import { NavLink } from 'react-router-dom';
-import { ROUTE_PROFILE, ROUTE_FEED, ROUTE_ROOT } from '../../../utils/route-endpoints.js'
+import { ROUTE_PROFILE, ROUTE_FEED, ROUTE_ROOT } from '../../utils/route-endpoints.js'
 
 const AppHeader: FC = () => {
   return (
@@ -10,6 +10,7 @@ const AppHeader: FC = () => {
       <div className = {headerStyles.leftNav}>
         <NavLink 
           to={ROUTE_ROOT} end 
+          data-testid = 'burgerConstructor'
           className = {`text text_type_main-default ${headerStyles.navItem}`} 
         >{({ isActive }) => (
           <>
@@ -19,6 +20,7 @@ const AppHeader: FC = () => {
         )}
         </NavLink>
         <NavLink to={ROUTE_FEED} 
+          data-testid = 'feed'
           className = {`text text_type_main-default ml-6 ${headerStyles.navItem}`} 
         >{({ isActive }) => (
           <>
@@ -30,6 +32,7 @@ const AppHeader: FC = () => {
       </div>
       <Logo />
       <NavLink  to={ROUTE_PROFILE} 
+        data-testid = 'profile'
         className = {`text text_type_main-default ${headerStyles.navItem}`} 
       >{({ isActive }) => (
         <>
