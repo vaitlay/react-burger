@@ -1,13 +1,13 @@
 import itemStyles from './ingredient-item.module.css';
 import dummyImg from '../../../images/dummy-img.png';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../hooks/useDispatch';
 import { useDrag, useDrop } from 'react-dnd';
-import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../../services/actions/constructor-list.js';
+import { REMOVE_INGREDIENT, MOVE_INGREDIENT } from '../../../services/actions/constructor-list';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { TConstructorItem } from '../../../types'
 
-const IngredientItem = ({ ingredient }: { ingredient: TConstructorItem}): JSX.Element => {
+const IngredientItem = ({ ingredient }: { ingredient: TConstructorItem }): JSX.Element => {
 
   const dispatch = useDispatch();
   
@@ -22,10 +22,10 @@ const IngredientItem = ({ ingredient }: { ingredient: TConstructorItem}): JSX.El
 
   const [, dropIngredientRef] = useDrop({
     accept: 'betweenBunsItemSort',
-    drop(betweenBunsItem) {
+    drop(betweenBunsItem: TConstructorItem) {
       dispatch({ 
         type: MOVE_INGREDIENT, 
-        payload: {dropIngredient: ingredient , dragIngredient: betweenBunsItem }
+        payload: { dropIngredient: ingredient, dragIngredient: betweenBunsItem }
       });
     },
   })

@@ -2,24 +2,24 @@ import styles from '../page.module.css';
 import { useEffect } from 'react';
 import { Outlet } from 'react-router'
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
-import { getUserData, logout } from '../../services/actions/auth.js';
-import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_ROOT } from '../../utils/route-endpoints.js';
-import { TAuth } from '../../types';
+import { useSelector } from '../../hooks/useSelector';
+import { useDispatch } from '../../hooks/useDispatch';
+import { getUserData, logout } from '../../services/actions/auth';
+import { ROUTE_PROFILE, ROUTE_ORDERS, ROUTE_ROOT } from '../../utils/route-endpoints';
 
 const ProfilePage = () => {
 
   const dispatch = useDispatch();
 
-  const { authChecked } = useSelector((state:any) => state.authReducer as TAuth); //Доделать типизацию для redux
+  const { authChecked } = useSelector((state) => state.authReducer);
   
   const handleLogout = () => {
-    dispatch(logout() as any); //Доделать типизацию для redux
+    dispatch(logout());
   }
 
   useEffect(() => {
-    if (!authChecked) dispatch(getUserData() as any); //Доделать типизацию для redux
+    if (!authChecked) dispatch(getUserData());
   }, [])
 
   return (
@@ -55,7 +55,7 @@ const ProfilePage = () => {
             </NavLink>
           </li>
           <li className='mt-30'>
-            <p className='text text_type_main-default text_color_inactive'>В этом разделе вы можете изменить свои персональные данные</p>
+            <p className='text text_type_main-default text_color_inactive'>В этом разделе вы можете изменить свои персональные данные и просмотреть свою историю заказов</p>
           </li>
         </ul>
 

@@ -2,11 +2,11 @@ import styles from './page.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { Link, useNavigate, useLocation  } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { forgotPassword } from '../services/actions/auth.js';
-import { ROUTE_LOGIN, ROUTE_RESET_PASSWORD } from '../utils/route-endpoints.js';
+import { useSelector } from '../hooks/useSelector';
+import { useDispatch } from '../hooks/useDispatch';
+import { forgotPassword } from '../services/actions/auth';
+import { ROUTE_LOGIN, ROUTE_RESET_PASSWORD } from '../utils/route-endpoints';
 import { useInput } from '../hooks/useInput';
-import { TAuth } from '../types';
 
 const ForgotPasswordPage = (): JSX.Element => {
 
@@ -14,12 +14,12 @@ const ForgotPasswordPage = (): JSX.Element => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isLoading, hasError, errorMessage } = useSelector((state: any) => state.authReducer as TAuth);
+  const { isLoading, hasError, errorMessage } = useSelector((state) => state.authReducer);
   const [currentEmail, onChangeEmail] = useInput('example@email.com'); 
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(forgotPassword({ email: currentEmail }) as any); //Доделать типизацию для redux
+    dispatch(forgotPassword({ email: currentEmail })); 
     navigate(ROUTE_RESET_PASSWORD, {state : {from : location}});
   }
   

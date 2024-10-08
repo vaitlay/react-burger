@@ -3,29 +3,29 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { useMemo } from 'react'
 import { useModal } from '../../../hooks/useModal'
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from '../../../hooks/useSelector';
+import { useDispatch } from '../../../hooks/useDispatch';
 import { useNavigate } from 'react-router'
 import { useDrop } from 'react-dnd';
 
-import { addIngredient, addBuns } from '../../../services/actions/constructor-list.js';
-import { addCurrentOrder } from '../../../services/actions/add-order-data.js';
-import { ROUTE_LOGIN } from '../../../utils/route-endpoints.js'
+import { addIngredient, addBuns } from '../../../services/actions/constructor-list';
+import { addCurrentOrder } from '../../../services/actions/order-data';
+import { ROUTE_LOGIN } from '../../../utils/route-endpoints'
 
 import IngredientItem from '../ingredient-item/ingredient-item';
 import Price from '../../price/price';
-import OrderDetails from '../../order-details/order-details'
+import OrderDetails from '../../orders/order-details/order-details'
 import Modal from '../../modal/modal'
 
-import { TConstructorItem } from '../../../types'
+import { TAddOrderData, TIngredientItem } from '../../../types'
 
 const BurgerConstructor = (): JSX.Element => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { loggedIn } = useSelector((state: any) => state.authReducer as {loggedIn : boolean}); //Позже доделать типизацию для redux
-  const { buns, ingredients } = useSelector((state: any) => state.constructorListReducer as {  //Позже доделать типизацию для redux
-    buns: Array<TConstructorItem>, ingredients: Array<TConstructorItem> });
+  const { loggedIn } = useSelector((state) => state.authReducer); 
+  const { buns, ingredients } = useSelector((state) => state.constructorListReducer);
   
   const calculatedTotal = useMemo(() => {
     return buns.reduce((sum, item) => sum + Number(item.price),0) + ingredients.reduce((sum, item) => sum + Number(item.price),0);
@@ -35,14 +35,14 @@ const BurgerConstructor = (): JSX.Element => {
 
   const [, dropBetweenBunsItemRef] = useDrop({
     accept: 'betweenBunsItem',
-    drop(betweenBunsItem) {
+    drop(betweenBunsItem: TIngredientItem) {
       dispatch(addIngredient(betweenBunsItem));
     },
   });
 
   const [, dropBunsRef] = useDrop({
     accept: 'bun',
-    drop(bun) {
+    drop(bun: TIngredientItem) {
         dispatch(addBuns(bun));
     },
   });  
@@ -54,10 +54,11 @@ const BurgerConstructor = (): JSX.Element => {
     } else {
       console.log('Order sending...')
       openModal();
-      const orderData: Array<string> = [];
-      for (let bun of buns) orderData.push(bun._id);
-      for (let ingr of ingredients) orderData.push(ingr._id);
-      dispatch(addCurrentOrder(orderData) as any);  //Позже доделать типизацию для redux
+      const orderData: TAddOrderData = [];
+      orderData.push(buns[0]._id)
+      for (let ingr of ingredients) orderData.push( ingr._id );
+      orderData.push(buns[1]._id)
+      dispatch(addCurrentOrder(orderData));
     }
   }
 

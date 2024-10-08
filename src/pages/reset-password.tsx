@@ -3,12 +3,13 @@ import { PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burg
 
 import { useEffect } from 'react';
 import { useInput } from '../hooks/useInput';
+import { useSelector } from '../hooks/useSelector';
+import { useDispatch } from '../hooks/useDispatch';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 
-import { resetPassword } from '../services/actions/auth.js';
-import { ROUTE_LOGIN } from '../utils/route-endpoints.js';
-import { TAuth} from '../types';
+
+import { resetPassword } from '../services/actions/auth';
+import { ROUTE_LOGIN } from '../utils/route-endpoints';
 
 const ResetPasswordPage = () => {
 
@@ -16,7 +17,7 @@ const ResetPasswordPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isLoading, hasError, errorMessage, resetPasswordSuccess } = useSelector((state: any) => state.authReducer as TAuth); //Доделать типизацию для redux
+  const { isLoading, hasError, errorMessage, requestSuccess } = useSelector((state) => state.authReducer); 
   const [currentPassword, onChangePassword] = useInput();
   const [currentToken, onChangeToken] = useInput();
 
@@ -29,15 +30,15 @@ const ResetPasswordPage = () => {
     dispatch(resetPassword({
       newPassword: currentPassword,
       token: currentToken
-    }) as any); //Доделать типизацию для redux
+    })); 
   }
 
   useEffect(() => {
-    if (resetPasswordSuccess) {
+    if (requestSuccess) {
       alert('Пароль изменён');
       navigate(ROUTE_LOGIN)
     }
-  },[resetPasswordSuccess])
+  },[requestSuccess])
 
   return (
     <form className={styles.formContainer} onSubmit={handleSubmit}>

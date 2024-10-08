@@ -1,3 +1,4 @@
+import { TUser } from '../../types'
 import {
   FORGOT_PASSWORD_SUCCESS, 
   FORGOT_PASSWORD_REQUEST, 
@@ -20,21 +21,41 @@ import {
   PATCH_USER_DATA_SUCCESS,
   PATCH_USER_DATA_REQUEST,
   PATCH_USER_DATA_FAILED,
-  SET_AUTH_CHECKED
- } from '../actions/auth.js'
+  SET_AUTH_CHECKED,
+  TAuthActions
+} from '../actions/auth'
 
-  const initialState = {
+
+type TAuthState = {
+  isLoading: boolean,
+  requestSuccess: boolean,
+  loggedIn: boolean,
+  authChecked: boolean,
+  hasError: {
+    forgotPassword?: boolean,
+    resetPassword?: boolean,
+    register?: boolean,
+    login?: boolean,
+    getUserData?: boolean,
+    patchUserData?: boolean
+  },
+  errorMessage: string,
+  user: TUser
+}
+
+
+  const initialState: TAuthState = {
     isLoading: false,
-    resetPasswordSuccess: false,
+    requestSuccess: false,
     loggedIn: false,
     authChecked: false,
     hasError: {},
     errorMessage: '',
-    user: {},
+    user: { email: '' }
   };
   
   
-  const authReducer = (state = initialState, action) => {
+  const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
     switch(action.type) {
       case SET_AUTH_CHECKED: {
         return {
@@ -124,13 +145,13 @@ import {
           loggedIn: false,
           hasError: {},
           errorMessage: '',   
-          user: {}
+          user: { email: '' }
         };
       }
       case RESET_PASSWORD_SUCCESS:
         return {
           ...state,
-          resetPasswordSuccess: true,
+          requestSuccess: true,
           isLoading: false,
           hasError: {},
           errorMessage: '',   

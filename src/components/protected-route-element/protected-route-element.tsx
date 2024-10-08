@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useSelector } from '../../hooks/useSelector';
+import { useDispatch } from '../../hooks/useDispatch';
 
 import { TAuth } from '../../types';
 import { getUserData } from '../../services/actions/auth';
@@ -12,13 +13,13 @@ type TProtectedRoute = {
 }
 
 const ProtectedRouteElement = ({ onlyAuth, element }: TProtectedRoute): JSX.Element => {
-  const { loggedIn, authChecked } = useSelector((state: any) => state.authReducer as TAuth); //Доделать типизацию redux
+  const { loggedIn, authChecked } = useSelector((state) => state.authReducer);
   const dispatch = useDispatch();
   const location = useLocation();
 
     
   useEffect(() => {
-    if (!authChecked) dispatch(getUserData() as any); //Доделать типизацию redux
+    if (!authChecked) dispatch(getUserData()); 
   }, []);
   
 

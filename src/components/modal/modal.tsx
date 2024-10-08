@@ -5,13 +5,13 @@ import modalStyles from './modal.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay'
 
-type TModalProps = {
+type TModal = {
   header: string;
   onClose: () => void;
   children: React.ReactNode;
 }
 
-const Modal = ({ header, children, onClose }: TModalProps): ReactPortal => {
+const Modal = ({ header, children, onClose }: TModal): ReactPortal => {
 
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {

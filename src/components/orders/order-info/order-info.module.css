@@ -1,0 +1,15 @@
+.container {
+    max-width: 720px;
+}
+.ingredientRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+.ingredient {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:flex-start;
+}

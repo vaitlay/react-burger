@@ -15,8 +15,10 @@ import ForgotPasswordPage from '../../pages/forgot-password'
 import ResetPasswordPage from '../../pages/reset-password'
 import ProfilePage from '../../pages/profile/profile'
 import ProfileForm from '../../pages/profile/profile-form'
-import Orders from '../../pages/profile/orders'
+import ProfileOrders from '../../pages/profile/profile-orders'
 import IngredientPage from '../../pages/ingredient'
+import FeedPage from '../../pages/feed'
+import OrderInfoPage from '../../pages/order-info-page'
 import NotFound404 from '../../pages/not-found'
 
 import { 
@@ -25,8 +27,10 @@ import {
   ROUTE_FORGOT_PASSWORD, 
   ROUTE_RESET_PASSWORD, 
   ROUTE_PROFILE,
+  ROUTE_PROFILE_ORDERS,
   ROUTE_ORDERS,
-  ROUTE_INGREDIENTS } from '../../utils/route-endpoints.js'
+  ROUTE_INGREDIENTS,
+  ROUTE_FEED } from '../../utils/route-endpoints.js'
 
 
 function App() {
@@ -46,21 +50,33 @@ function App() {
             <Route path={ROUTE_REGISTER} element={<ProtectedRouteElement onlyAuth = {false} element={<RegisterPage />} />} /> 
             <Route path={ROUTE_FORGOT_PASSWORD} element={<ProtectedRouteElement onlyAuth = {false} element={<ForgotPasswordPage />} />} /> 
             <Route path={ROUTE_RESET_PASSWORD} element={<ResetPasswordPage />} /> 
-            <Route path={ROUTE_ORDERS} element={<Orders />} /> 
             <Route path={ROUTE_PROFILE} element={<ProtectedRouteElement onlyAuth = {true} element={<ProfilePage />} />}>
               <Route index element={<ProfileForm/>} />
-              <Route path = {ROUTE_ORDERS} element={<Orders/>} />
+              <Route path = {ROUTE_ORDERS} element={<ProfileOrders/>} />
             </Route>
+            <Route path={ROUTE_PROFILE_ORDERS + '/:number'} element={<ProtectedRouteElement onlyAuth = {true} element = {<OrderInfoPage isUserProfile = {true} />} />} />
             <Route path={ROUTE_INGREDIENTS + '/:_id'} element={<IngredientPage />} />
+            <Route path={ROUTE_FEED} element={<FeedPage/>} />
+            <Route path={ROUTE_FEED + '/:number'} element={<OrderInfoPage isUserProfile = {false} />} />
             <Route path="*" element={<NotFound404/>}/>
           </Routes>  
           {backgroundLocation && (
             <Routes>
               <Route path={ROUTE_INGREDIENTS + '/:_id'} element = {
-                <Modal header = 'Детали ингридиента' onClose = {() => navigate('/')}>
+                <Modal header = 'Детали ингредиента' onClose = {() => navigate('/')}>
                   <IngredientDetails />
                 </Modal>   
                 } />
+              <Route path={ROUTE_FEED + '/:number'} element = {
+                <Modal header = '' onClose = {() => navigate(ROUTE_FEED)}>
+                  <OrderInfoPage isUserProfile = {false}/>
+                </Modal>   
+                } />  
+              <Route path={ROUTE_PROFILE_ORDERS + '/:number'} element = {
+                <Modal header = '' onClose = {() => navigate(ROUTE_PROFILE_ORDERS)}>
+                  <OrderInfoPage isUserProfile = {true}/>
+                </Modal>   
+                } />                               
             </Routes>
           )} 
           </main>          
