@@ -1,5 +1,5 @@
 Уебный проект по курсу React yandex practicum
-размещен на сервере http://http://84.201.171.73:81
+размещен на сервере http://84.201.171.73:80 или http://tutorialburger.students.nomorepartiesco.ru/
 
 
 
