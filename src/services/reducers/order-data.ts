@@ -19,7 +19,7 @@ type TOrderDataState = {
 
 
 
-const initialState: TOrderDataState = {
+export const initialState: TOrderDataState = {
   addedOrder: null,
   loadedOrder: undefined,
   isLoading: false,
@@ -28,7 +28,7 @@ const initialState: TOrderDataState = {
 };
 
 
-const orderReducer = (state = initialState, action: TAddOrderDataActions ): TOrderDataState  => {
+export const orderReducer = (state = initialState, action: TAddOrderDataActions ): TOrderDataState  => {
   switch(action.type) {
     case ADD_ORDER_REQUEST: {
       return {
@@ -83,5 +83,3 @@ const orderReducer = (state = initialState, action: TAddOrderDataActions ): TOrd
     }
   }
 }
-
-export default orderReducer;

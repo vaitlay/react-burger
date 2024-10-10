@@ -1,3 +1,9 @@
+Уебный проект по курсу React yandex practicum
+размещен на сервере http://84.201.171.73:80 или http://tutorialburger.students.nomorepartiesco.ru/
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

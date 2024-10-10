@@ -44,7 +44,7 @@ type TAuthState = {
 }
 
 
-  const initialState: TAuthState = {
+export const initialState: TAuthState = {
     isLoading: false,
     requestSuccess: false,
     loggedIn: false,
@@ -55,7 +55,7 @@ type TAuthState = {
   };
   
   
-  const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
+export const authReducer = (state = initialState, action: TAuthActions): TAuthState => {
     switch(action.type) {
       case SET_AUTH_CHECKED: {
         return {
@@ -176,5 +176,3 @@ type TAuthState = {
       }
     }
   }
-  
-  export default authReducer;

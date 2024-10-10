@@ -29,10 +29,10 @@ const Modal = ({ header, children, onClose }: TModal): ReactPortal => {
     (
     <>
     <ModalOverlay onClose={onClose} />
-    <div className={`${modalStyles.container} p-10`}>
+    <div className={`${modalStyles.container} p-10`} data-test-id = 'modal'>
       <div className={`${modalStyles.header}`}>
         <p className = 'text text_type_main-large'>{header}</p>
-        <CloseIcon type="primary" onClick={onClose}/>
+        <CloseIcon type="primary" onClick={onClose} />
       </div>  
       <div className ={`${modalStyles.body} mt-5`}>  
         {children}

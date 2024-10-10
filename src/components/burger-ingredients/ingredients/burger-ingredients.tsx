@@ -51,8 +51,8 @@ const BurgerIngredients = (): JSX.Element =>
 
   return (
     <section className = {burgerStyles.section}>
-      <h1 className = 'text text_type_main-large'>Соберите бургер</h1>
-      <div className = {burgerStyles.tabs}>
+      <h1 className = 'text text_type_main-large' >Соберите бургер</h1>
+      <div className = {burgerStyles.tabs} >
         <Tab value="bun" active={currentTab === 'bun'} onClick={srollToSelectedTab}>
           Булки
         </Tab>
